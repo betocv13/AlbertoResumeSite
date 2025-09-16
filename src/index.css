@@ -11,6 +11,11 @@
   text-rendering: optimizeLegibility;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
+  --bg:#0b0b0b;
+  --panel:#161616;
+  --text:#eaeaea;
+  --muted:#9a9a9a;
+  --accent:#ffffff;
 }
 
 a {
@@ -24,34 +29,91 @@ a:hover {
 
 body {
   margin: 0;
-  display: flex;
-  place-items: center;
   min-width: 320px;
   min-height: 100vh;
+  background: var(--bg);
+  color: var(--text);
 }
 
-h1 {
-  font-size: 3.2em;
-  line-height: 1.1;
+.container {
+  margin: 0 auto;
+  padding: 24px 24px 96px;
 }
 
-button {
-  border-radius: 8px;
-  border: 1px solid transparent;
-  padding: 0.6em 1.2em;
-  font-size: 1em;
-  font-weight: 500;
-  font-family: inherit;
-  background-color: #1a1a1a;
+.header {
+  display: flex;
+  align-items: center;  
+  min-height: 48px;     
+}
+.hero h1{
+  font-size: 5.3rem;
+  line-height: 1.05;
+  letter-spacing: -0.02em;
+  margin: 24px 0 32px;
+  font-weight: 400;
+}
+
+.name {
+  font-size: 2.2rem;
+  font-weight: 400;
+  color: var(--muted); 
+  padding-top: 20px;
+}
+
+.hero { 
+  margin-top: 100px;
+  margin-bottom: 100px;
+}
+
+/* Pill buttons (your current styles are fine) */
+.pill-nav {
+  position: fixed;
+  right: 42px;
+  top: 42px;
+  display: flex;
+  gap: 10px;
+  z-index: 1000;
+}
+
+.pill {
+  font-size: 1.2rem;
+  background: #313131;
+  color: var(--text);
+  border: 1px solid #2a2a2a;
+  padding: 16px 26px;
+  border-radius: 999px;
   cursor: pointer;
-  transition: border-color 0.25s;
+  font-weight: 400;
+  transition: transform .15s ease, background .15s ease, color .15s ease;
 }
-button:hover {
-  border-color: #646cff;
-}
-button:focus,
-button:focus-visible {
-  outline: 4px auto -webkit-focus-ring-color;
+.pill:hover { transform: translateY(-1px); }
+.pill.active { background: var(--accent); color: #000; }
+
+/* Mobile----------------------------------- */
+@media (max-width: 768px) {
+  .pill-nav {
+    top: auto;
+    bottom: 20px;
+    right: 50%;
+    transform: translateX(50%);
+    justify-content: center;
+  }
+
+  .pill {
+    padding: 12px 20px; /* smaller pills for mobile */
+    font-size: 1rem;
+  }
+  .name {
+    font-size: 1.8rem;
+    padding-top: 0px;
+  }
+  .hero h1{
+    font-size: 2.5rem;
+  }
+  .hero {
+     margin-top: 0px;
+     margin-bottom: 50px;
+    }
 }
 
 @media (prefers-color-scheme: light) {
