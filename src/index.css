@@ -89,6 +89,7 @@ body {
 .pill:hover { transform: translateY(-1px); }
 .pill.active { background: var(--accent); color: #000; }
 
+
 /* Mobile----------------------------------- */
 @media (max-width: 768px) {
   .pill-nav {
@@ -115,6 +116,8 @@ body {
      margin-bottom: 50px;
     }
 }
+
+
 
 @media (prefers-color-scheme: light) {
   :root {

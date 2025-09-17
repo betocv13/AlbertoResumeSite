@@ -1,4 +1,5 @@
 import RightPillNav from "./components/RightPillNav";
+import AboutSection from "./components/AboutSection";
 import "./App.css";
 
 export default function App() {
@@ -19,17 +20,14 @@ export default function App() {
 
         {/* Placeholder for horizontal scroll “cards” */}
         <section className="scroller">
-          <div className="card">Daylight</div>
-          <div className="card">Workmate</div>
-          <div className="card">Slingshot</div>
-          <div className="card">Patreon</div>
+          <div className="card">SceneIt</div>
+          <div className="card">Wardro</div>
+          <div className="card">Parkside Tavern</div>
+          <div className="card">Artez</div>
           <div className="card">More…</div>
         </section>
 
-        <section id="about" className="pad">
-          <h2>About</h2>
-          <p>Short bio goes here…</p>
-        </section>
+        <AboutSection />
 
         <section id="contact" className="pad">
           <h2>Contact</h2>
