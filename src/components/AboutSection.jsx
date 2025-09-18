@@ -38,7 +38,7 @@ export default function AboutSection() {
             </ul>
           )}
 
-          <a className="about-read" href="#contact">Read more →</a>
+        {/* <a className="about-read" href="#contact">Read more →</a> */}
         </div>
       </div>
     </section>

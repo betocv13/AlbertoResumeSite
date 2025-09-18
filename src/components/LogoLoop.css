@@ -1,0 +1,57 @@
+/* Section/title (unchanged) */
+.logo-loop-section { margin: 96px 0; }
+.logo-loop-title { font-size: 1.8rem; font-weight: 400; margin-bottom: 16px; }
+
+/* Full-bleed mask (keep as you have) */
+.logo-loop-mask{
+  position: relative;
+  overflow: hidden;
+  width: 100dvw;
+  margin-left: calc(50% - 50dvw);
+  -webkit-mask-image: linear-gradient(to right, transparent 0, black 10%, black 90%, transparent 100%);
+          mask-image: linear-gradient(to right, transparent 0, black 10%, black 90%, transparent 100%);
+}
+
+/* RAIL: holds two tracks; ONLY the rail animates */
+.logo-loop-rail{
+  display: inline-flex;
+  gap: 0;
+  margin-top: 40px;
+  will-change: transform;
+  transform: translate3d(0,0,0);
+  animation: rail-scroll var(--loop-duration, 25s) linear infinite;
+}
+
+/* TRACK: no animation here */
+.logo-loop-track{
+  display: inline-flex;
+  align-items: center;
+  gap: var(--logo-gap, 48px);
+  height: calc(var(--logo-height, 56px) + 8px);
+  flex: 0 0 auto; /* don't shrink */
+}
+/* Add extra space at the end of each track */
+.logo-loop-track::after {
+  content: "";
+  flex: 0 0 var(--logo-gap, 48px); /* acts like an extra invisible spacer */
+}
+
+/* Icons (unchanged) */
+.logo-item{ flex:0 0 auto; display:grid; place-items:center; padding:6px 0; opacity:.9; filter:grayscale(1); }
+.logo-item.icon svg{ width:100%; height:100%; display:block; fill:#cfcfcf; transition: fill .2s, transform .2s, opacity .2s; }
+.logo-item.icon:hover svg{ fill:#fff; transform: translateY(-2px); opacity:1; }
+
+/* Animate the rail exactly one track width (half the rail) → seamless */
+@keyframes rail-scroll{
+  from{ transform: translate3d(0,0,0); }
+  to  { transform: translate3d(-50%,0,0); }
+}
+
+/* Mobile tweaks (you already pass speedMobile/sizeMobile/gapMobile via props) */
+@media (max-width: 768px){
+  .logo-loop-section{ margin: 56px 0; }
+  .logo-loop-title{ font-size: 1.4rem; }
+}
+
+/* If you had this earlier and animation was “stuck”, keep it off while testing */
+ @media (prefers-reduced-motion: reduce){ .logo-loop-track{ animation: none; } }

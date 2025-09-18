@@ -26,6 +26,7 @@ a {
 a:hover {
   color: #535bf2;
 }
+html, body { overflow-x: hidden; }
 
 body {
   margin: 0;
@@ -56,8 +57,28 @@ body {
 .name {
   font-size: 2.2rem;
   font-weight: 400;
-  color: var(--muted); 
   padding-top: 20px;
+
+  /* Gradient text */
+  background: linear-gradient(
+    110deg,
+    var(--muted) 0%,
+    #ffffff 40%,
+    var(--muted) 50%
+  );
+  background-size: 200% auto;
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+
+  /* Shiny animation */
+  animation: shine 2s linear infinite;
+}
+
+@keyframes shine {
+  to {
+    background-position: -200% center;
+  }
 }
 
 .hero { 
@@ -68,7 +89,7 @@ body {
 /* Pill buttons (your current styles are fine) */
 .pill-nav {
   position: fixed;
-  right: 42px;
+  right: 23px;
   top: 42px;
   display: flex;
   gap: 10px;
@@ -89,14 +110,21 @@ body {
 .pill:hover { transform: translateY(-1px); }
 .pill.active { background: var(--accent); color: #000; }
 
+@media (max-width: 1200px) {
+.hero h1{
+  font-size: 4rem;
+}
+}
 
 /* Mobile----------------------------------- */
 @media (max-width: 768px) {
   .pill-nav {
     top: auto;
     bottom: 20px;
-    right: 50%;
-    transform: translateX(50%);
+    /* FIX: center without overflow */
+    left: 50%;
+    right: auto;
+    transform: translateX(-50%);
     justify-content: center;
   }
 
@@ -109,11 +137,11 @@ body {
     padding-top: 0px;
   }
   .hero h1{
-    font-size: 2.5rem;
+    font-size: 1.8rem;
   }
   .hero {
      margin-top: 0px;
-     margin-bottom: 50px;
+     margin-bottom: 0px;
     }
 }
 

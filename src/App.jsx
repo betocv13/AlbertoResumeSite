@@ -1,6 +1,44 @@
+import {
+  SiReact,
+  SiVuedotjs,
+  SiNodedotjs,
+  SiSupabase,
+  SiFigma,
+  SiGithub,
+  SiCanva,
+  SiTypescript,
+  SiWebflow,
+  SiPostgresql,   // for SQL
+  SiPython,
+  SiHtml5,
+  SiCss3,
+  SiJavascript,
+} from "react-icons/si";
 import RightPillNav from "./components/RightPillNav";
 import AboutSection from "./components/AboutSection";
+import CapabilitiesSection from "./components/CapabilitiesSection";
+import LogoLoopIcons from "./components/LogoLoopIcons";
+import ContactSection from "./components/ContactSection";
+import ProjectsScroller from "./components/ProjectsScroller";
 import "./App.css";
+
+const techIcons = [
+  { el: <SiReact />, label: "React" },
+  { el: <SiVuedotjs />, label: "Vue" },
+  { el: <SiNodedotjs />, label: "Node.js" },
+  { el: <SiSupabase />, label: "Supabase" },
+  { el: <SiFigma />, label: "Figma" },
+  { el: <SiHtml5 />, label: "HTML5" },
+  { el: <SiGithub />, label: "GitHub" },
+  { el: <SiCanva />, label: "Canva" },
+  { el: <SiCss3 />, label: "CSS3" },
+  { el: <SiTypescript />, label: "TypeScript" },
+  { el: <SiWebflow />, label: "Webflow" },
+  { el: <SiPostgresql />, label: "SQL" },
+  { el: <SiPython />, label: "Python" },
+  { el: <SiJavascript />, label: "JavaScript" },
+];
+
 
 export default function App() {
   return (
@@ -19,20 +57,23 @@ export default function App() {
         </section>
 
         {/* Placeholder for horizontal scroll “cards” */}
-        <section className="scroller">
-          <div className="card">SceneIt</div>
-          <div className="card">Wardro</div>
-          <div className="card">Parkside Tavern</div>
-          <div className="card">Artez</div>
-          <div className="card">More…</div>
-        </section>
+        <ProjectsScroller />
 
         <AboutSection />
 
-        <section id="contact" className="pad">
-          <h2>Contact</h2>
-          <p>Form will go here…</p>
-        </section>
+        <CapabilitiesSection />
+
+        <LogoLoopIcons
+  icons={techIcons}
+  title="Tech Stack"
+  size={75}
+  gap={60}
+  speed={22}
+  sizeMobile={44}     // smaller icons on phones
+  gapMobile={32}      // tighter spacing on phones
+  speedMobile={0}    // 🚀 faster on phones
+/>
+        <ContactSection />
       </main>
     </>
   );

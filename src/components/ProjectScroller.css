@@ -1,0 +1,93 @@
+/* --- Horizontal scroller ---------------------------------------------- */
+.scroller{
+    display: flex;                        /* simpler & predictable layout */
+    gap: 45px;
+    overflow-x: auto;
+    padding: 20px 4px 14px;               /* leave room for thin scrollbar */
+    scroll-snap-type: x mandatory;
+    -webkit-overflow-scrolling: touch;
+  
+    /* nicer/thinner scrollbar */
+    scrollbar-width: thin;                /* Firefox */
+    scrollbar-color: #2a2a2a transparent;
+  }
+  .scroller::-webkit-scrollbar { height: 8px; }          /* Chrome/Safari */
+  .scroller::-webkit-scrollbar-track { background: transparent; }
+  .scroller::-webkit-scrollbar-thumb {
+    background: #2a2a2a;
+    border-radius: 999px;
+    border: 2px solid #0b0b0b;           /* pill thumb on dark bg */
+  }
+  
+  /* each item width (same as your grid-auto-columns) */
+  .scroller > * {
+    flex: 0 0 clamp(320px, 28vw, 520px);
+    scroll-snap-align: start;
+  }
+  
+  /* --- Card -------------------------------------------------------------- */
+  .card-link { text-decoration: none; color: inherit; }
+  
+  .card{
+    position: relative;
+    background: #222;
+    border: 1px solid #222;
+    border-radius: 24px;
+    height: 450px;
+    overflow: hidden;
+    transition: transform .2s ease, background .2s ease, border-color .2s ease;
+  }
+  .card:hover{
+    background: #2a2a2a;
+    border-color: #323232;
+    transform: translateY(-4px);
+  }
+  
+  /* Image: smaller, centered, never cropped */
+  .card-img{
+    position: absolute;
+    /* inset creates a “frame” so the art is smaller */
+    inset: 6% 6% 120px 6%;               /* top right bottom left */
+    width: auto;
+    height: auto;
+    max-width: calc(100% - 12%);
+    max-height: calc(100% - 126px);
+    margin: auto;                         /* centers inside the inset box */
+    object-fit: contain;
+    opacity: 0.95;
+    filter: drop-shadow(0 8px 24px rgba(0,0,0,.35));
+  }
+  
+  /* Footer pinned to bottom-left */
+  .card-footer{
+    position: absolute;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    padding: 22px;
+    text-align: left;
+    background: linear-gradient(to top, rgba(0,0,0,.45), transparent 60%);
+  }
+  
+  .card-title{
+    font-weight: 500;
+    font-size: 1.6rem;
+    margin: 0 0 6px 0;
+    color: #f2f2f2;
+  }
+  .card-desc{
+    font-size: 1rem;
+    color: var(--muted);
+  }
+  
+  /* --- Mobile ------------------------------------------------------------ */
+  @media (max-width: 768px){
+    .scroller{
+      gap: 20px;
+    }
+    .scroller > *{
+      flex-basis: 85%;                    /* nice big cards on phones */
+    }
+    .card{ height: 375px; }
+    .card-img{ inset: 8% 8% 100px 8%; }   /* a bit more room for footer */
+  }
