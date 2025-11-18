@@ -11,7 +11,7 @@
   text-rendering: optimizeLegibility;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
-  --bg:#0b0b0b;
+  --bg: #000000;
   --panel:#161616;
   --text:#eaeaea;
   --muted:#9a9a9a;
@@ -72,7 +72,7 @@ body {
   background-clip: text;
 
   /* Shiny animation */
-  animation: shine 2s linear infinite;
+  animation: shine 1s linear infinite;
 }
 
 @keyframes shine {
@@ -120,7 +120,7 @@ body {
 @media (max-width: 768px) {
   .pill-nav {
     top: auto;
-    bottom: 20px;
+    bottom: 10px;
     /* FIX: center without overflow */
     left: 50%;
     right: auto;

@@ -20,6 +20,7 @@ import CapabilitiesSection from "./components/CapabilitiesSection";
 import LogoLoopIcons from "./components/LogoLoopIcons";
 import ContactSection from "./components/ContactSection";
 import ProjectsScroller from "./components/ProjectsScroller";
+import ApproachSection from "./components/ApproachSection";
 import "./App.css";
 
 const techIcons = [
@@ -62,6 +63,8 @@ export default function App() {
         <AboutSection />
 
         <CapabilitiesSection />
+
+          <ApproachSection />
 
         <LogoLoopIcons
   icons={techIcons}
