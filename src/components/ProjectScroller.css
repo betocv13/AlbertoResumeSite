@@ -1,3 +1,8 @@
+/* --- Wrapper for positioning arrows/fades ------------------------------ */
+.scroller-wrapper {
+    position: relative;
+  }
+
 /* --- Horizontal scroller ---------------------------------------------- */
 .scroller{
     display: flex;                        /* simpler & predictable layout */
@@ -6,7 +11,7 @@
     padding: 20px 4px 14px;               /* leave room for thin scrollbar */
     scroll-snap-type: x mandatory;
     -webkit-overflow-scrolling: touch;
-  
+
     /* nicer/thinner scrollbar */
     scrollbar-width: thin;                /* Firefox */
     scrollbar-color: #2a2a2a transparent;
@@ -17,6 +22,67 @@
     background: #2a2a2a;
     border-radius: 999px;
     border: 2px solid #0b0b0b;           /* pill thumb on dark bg */
+  }
+
+/* Hide scrollbar on desktop */
+@media (min-width: 769px) {
+  .scroller {
+    scrollbar-width: none;
+  }
+  .scroller::-webkit-scrollbar {
+    display: none;
+  }
+}
+
+/* --- Fades (desktop only) ---------------------------------------------- */
+.scroller-fade {
+    position: absolute;
+    top: 0;
+    bottom: 0;
+    width: 120px;
+    pointer-events: none;
+    z-index: 2;
+  }
+
+  .scroller-fade--left {
+    left: 0;
+    background: linear-gradient(90deg, #000 0%, transparent 100%);
+  }
+
+  .scroller-fade--right {
+    right: 0;
+    background: linear-gradient(270deg, #000 0%, transparent 100%);
+  }
+
+/* --- Arrows (desktop only) --------------------------------------------- */
+.scroller-arrow {
+    position: absolute;
+    top: 50%;
+    transform: translateY(-50%);
+    width: 40px;
+    height: 40px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: rgba(0, 0, 0, 0.6);
+    border: none;
+    border-radius: 50%;
+    color: #fff;
+    cursor: pointer;
+    z-index: 3;
+    transition: background 0.2s ease;
+  }
+
+  .scroller-arrow:hover {
+    background: rgba(0, 0, 0, 0.8);
+  }
+
+  .scroller-arrow--left {
+    left: 1rem;
+  }
+
+  .scroller-arrow--right {
+    right: 1rem;
   }
   
   /* each item width (same as your grid-auto-columns) */
@@ -33,9 +99,10 @@
     background: #222;
     border: 1px solid #222;
     border-radius: 24px;
-    height: 450px;
+    aspect-ratio: 4/5;
     overflow: hidden;
     transition: transform .2s ease, background .2s ease, border-color .2s ease;
+    box-shadow: inset 0 1px 0 0 rgba(255, 255, 255, 0.1);
   }
   .card:hover{
     background: #2a2a2a;
@@ -78,6 +145,30 @@
   .card-desc{
     font-size: 1rem;
     color: var(--muted);
+  }
+
+  /* Arrow icon on hover */
+  .card-arrow {
+    position: absolute;
+    bottom: 22px;
+    right: 22px;
+    width: 40px;
+    height: 40px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: rgba(0, 0, 0, 0.6);
+    border-radius: 50%;
+    font-size: 1.2rem;
+    color: #fff;
+    opacity: 0;
+    transform: translateX(8px);
+    transition: opacity 0.25s ease, transform 0.25s ease;
+  }
+
+  .card:hover .card-arrow {
+    opacity: 1;
+    transform: translateX(0);
   }
 
   /* --- Skeleton Loading -------------------------------------------------- */
@@ -130,7 +221,12 @@
     .scroller > *{
       flex-basis: 85%;                    /* nice big cards on phones */
     }
-    .card{ height: 375px; }
     .card-img{ inset: 8% 8% 100px 8%; }   /* a bit more room for footer */
     .skeleton-img{ inset: 8% 8% 100px 8%; }
+
+    /* Hide arrows and fades on mobile */
+    .scroller-fade,
+    .scroller-arrow {
+      display: none;
+    }
   }
