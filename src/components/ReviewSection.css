@@ -150,6 +150,21 @@
     line-height: 1;
 }
 
+/* Focus styles for accessibility */
+.reviews__arrow:focus {
+    outline: 2px solid #fff;
+    outline-offset: 2px;
+}
+
+.reviews__arrow:focus:not(:focus-visible) {
+    outline: none;
+}
+
+.reviews__arrow:focus-visible {
+    outline: 2px solid #fff;
+    outline-offset: 2px;
+}
+
 
 /* Dots (works on both desktop + mobile) */
 .reviews__dots {
@@ -235,5 +250,19 @@
         background: #f9fafb;
         width: 18px;
         transform: scale(1.05);
+    }
+
+    .reviews__dot:focus {
+        outline: 2px solid #fff;
+        outline-offset: 2px;
+    }
+
+    .reviews__dot:focus:not(:focus-visible) {
+        outline: none;
+    }
+
+    .reviews__dot:focus-visible {
+        outline: 2px solid #fff;
+        outline-offset: 2px;
     }
 }

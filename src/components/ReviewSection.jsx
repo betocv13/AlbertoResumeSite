@@ -5,6 +5,7 @@ import "./ReviewSection.css";
 function ReviewSection() {
     const [reviews, setReviews] = useState([]);
     const [loading, setLoading] = useState(true);
+    const [error, setError] = useState(null);
     const [activeIndex, setActiveIndex] = useState(0);
     const trackRef = useRef(null);
     const [maxIndex, setMaxIndex] = useState(0);
@@ -18,6 +19,7 @@ function ReviewSection() {
 
             if (error) {
                 console.error("Error loading reviews:", error);
+                setError(error.message);
             } else {
                 setReviews(data || []);
             }
@@ -29,32 +31,57 @@ function ReviewSection() {
     }, []);
 
     useEffect(() => {
-        if (!trackRef.current || reviews.length === 0) return;
+        const calculateMaxIndex = () => {
+            if (!trackRef.current || reviews.length === 0) return;
 
-        const track = trackRef.current;
-        const card = track.querySelector(".reviews__card");
-        if (!card) return;
+            const track = trackRef.current;
+            const card = track.querySelector(".reviews__card");
+            if (!card) return;
 
-        const trackRect = track.getBoundingClientRect();
-        const cardRect = card.getBoundingClientRect();
+            const trackRect = track.getBoundingClientRect();
+            const cardRect = card.getBoundingClientRect();
 
-        // gap: 2rem = 32px (matches your CSS: gap: 2rem)
-        const gap = 32;
-        const cardWidthWithGap = cardRect.width + gap;
+            // Get gap from computed styles (works for both desktop and mobile)
+            const trackStyles = getComputedStyle(track);
+            const gap = parseFloat(trackStyles.gap || "0");
+            const cardWidthWithGap = cardRect.width + gap;
 
-        // how many full cards fit in the viewport
-        const visibleCount = Math.max(
-            1,
-            Math.floor(trackRect.width / cardWidthWithGap)
-        );
+            // how many full cards fit in the viewport
+            const visibleCount = Math.max(
+                1,
+                Math.floor(trackRect.width / cardWidthWithGap)
+            );
 
-        // last index where the last group of cards is fully visible
-        const max = Math.max(0, reviews.length - visibleCount);
-        setMaxIndex(max);
+            // last index where the last group of cards is fully visible
+            const max = Math.max(0, reviews.length - visibleCount);
+            setMaxIndex(max);
+
+            // Ensure activeIndex doesn't exceed new maxIndex after resize
+            setActiveIndex((prev) => Math.min(prev, max));
+        };
+
+        calculateMaxIndex();
+        window.addEventListener("resize", calculateMaxIndex);
+        return () => window.removeEventListener("resize", calculateMaxIndex);
     }, [reviews]);
 
 
-    if (loading || reviews.length === 0) {
+    if (loading) {
+        return null;
+    }
+
+    if (error) {
+        return (
+            <section className="reviews">
+                <h2 className="reviews__title">In their words</h2>
+                <p style={{ color: "#9ca3af", textAlign: "center" }}>
+                    Unable to load reviews at this time.
+                </p>
+            </section>
+        );
+    }
+
+    if (reviews.length === 0) {
         return null;
     }
 
@@ -64,9 +91,9 @@ function ReviewSection() {
         const card = trackRef.current.querySelector(".reviews__card");
         if (!card) return;
 
-        const styles = getComputedStyle(card);
-        const marginRight = parseFloat(styles.marginRight || "0");
-        const width = card.getBoundingClientRect().width + marginRight;
+        const trackStyles = getComputedStyle(trackRef.current);
+        const gap = parseFloat(trackStyles.gap || "0");
+        const width = card.getBoundingClientRect().width + gap;
 
         trackRef.current.scrollTo({
             left: width * index,
@@ -160,7 +187,7 @@ function ReviewSection() {
             </div>
 
             <div className="reviews__dots">
-                {reviews.map((_, index) => (
+                {Array.from({ length: maxIndex + 1 }, (_, index) => (
                     <button
                         key={index}
                         type="button"
