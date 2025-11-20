@@ -5,7 +5,8 @@ export default function CursorLens({
   size = 150,
   blur = 8,
   scale = 1.1,
-  borderColor = "rgba(255, 255, 255, 0.1)"
+  borderColor = "rgba(255, 255, 255, 0.1)",
+  distortion = 20
 }) {
   const lensRef = useRef(null);
   const [isVisible, setIsVisible] = useState(false);
@@ -68,15 +69,33 @@ export default function CursorLens({
   if (isMobile) return null;
 
   return (
-    <div
-      ref={lensRef}
-      className={`cursor-lens ${isVisible ? "cursor-lens--visible" : ""}`}
-      style={{
-        width: size,
-        height: size,
-        "--blur": `${blur}px`,
-        "--border-color": borderColor,
-      }}
-    />
+    <>
+      {/* SVG filter for liquid distortion */}
+      <svg style={{ position: 'absolute', width: 0, height: 0 }}>
+        <defs>
+          <filter id="liquid-glass">
+            <feGaussianBlur in="SourceGraphic" stdDeviation={distortion / 4} result="blur" />
+            <feColorMatrix
+              in="blur"
+              type="matrix"
+              values="1 0 0 0 0  0 1 0 0 0  0 0 1 0 0  0 0 0 18 -7"
+              result="goo"
+            />
+            <feComposite in="SourceGraphic" in2="goo" operator="atop" />
+          </filter>
+        </defs>
+      </svg>
+
+      <div
+        ref={lensRef}
+        className={`cursor-lens ${isVisible ? "cursor-lens--visible" : ""}`}
+        style={{
+          width: size,
+          height: size,
+          "--blur": `${blur}px`,
+          "--border-color": borderColor,
+        }}
+      />
+    </>
   );
 }
