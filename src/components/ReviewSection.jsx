@@ -65,6 +65,42 @@ function ReviewSection() {
         return () => window.removeEventListener("resize", calculateMaxIndex);
     }, [reviews]);
 
+    // Update activeIndex when user manually scrolls/swipes
+    useEffect(() => {
+        const track = trackRef.current;
+        if (!track) return;
+
+        const handleScroll = () => {
+            const card = track.querySelector(".reviews__card");
+            if (!card) return;
+
+            const trackStyles = getComputedStyle(track);
+            const gap = parseFloat(trackStyles.gap || "0");
+            const cardWidth = card.getBoundingClientRect().width + gap;
+
+            // Calculate which card is currently in view
+            const scrollLeft = track.scrollLeft;
+            const scrollWidth = track.scrollWidth;
+            const clientWidth = track.clientWidth;
+
+            // Check if we're at the end of scroll (with small tolerance for rounding)
+            const isAtScrollEnd = scrollLeft + clientWidth >= scrollWidth - 5;
+
+            let newIndex;
+            if (isAtScrollEnd) {
+                newIndex = maxIndex;
+            } else {
+                newIndex = Math.round(scrollLeft / cardWidth);
+            }
+
+            const clampedIndex = Math.max(0, Math.min(newIndex, maxIndex));
+            setActiveIndex(clampedIndex);
+        };
+
+        track.addEventListener("scroll", handleScroll);
+        return () => track.removeEventListener("scroll", handleScroll);
+    }, [maxIndex]);
+
 
     if (loading) {
         return null;
