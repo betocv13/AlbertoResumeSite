@@ -21,6 +21,7 @@ import LogoLoopIcons from "./components/LogoLoopIcons";
 import ContactSection from "./components/ContactSection";
 import ProjectsScroller from "./components/ProjectsScroller";
 import ApproachSection from "./components/ApproachSection";
+import ReviewSection from "./components/ReviewSection";
 import "./App.css";
 
 const techIcons = [
@@ -76,6 +77,8 @@ export default function App() {
   gapMobile={32}      // tighter spacing on phones
   speedMobile={0}    // 🚀 faster on phones
 />
+          <ReviewSection />
+
         <ContactSection />
       </main>
     </>

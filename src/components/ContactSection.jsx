@@ -27,12 +27,7 @@ export default function ContactSection() {
               {email}
             </a>
           </p>
-          <p>
-  Call or text:{" "}
-  <a href="tel:+15157703607" className="contact-link">
-    (515) 770-3607
-  </a>
-</p>
+
           <small className="availability">Available for new work — let’s chat.</small>
         </div>
 
