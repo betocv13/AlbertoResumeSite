@@ -10,6 +10,11 @@ export default function ProjectCard({ title, description, imageUrl, linkUrl }) {
         <div className="card-title">{title}</div>
         {description && <div className="card-desc">{description}</div>}
       </div>
+      {linkUrl && (
+        <span className="card-arrow" aria-hidden="true">
+          →
+        </span>
+      )}
     </div>
   );
 
