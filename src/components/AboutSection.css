@@ -98,8 +98,9 @@
       gap: 20px;
     }
     .about-photo img {
-      max-height: 375px;
+      max-height: 450px;
       border-radius:12px;
+      object-position: top;
     }
     .about-title { 
         font-size: 1.6rem;
