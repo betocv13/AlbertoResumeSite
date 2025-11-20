@@ -10,11 +10,15 @@
   opacity: 0;
   transition: opacity 0.3s ease;
 
+  /* Default values for custom properties */
+  --blur: 8px;
+  --border-color: rgba(255, 255, 255, 0.1);
+
   /* Glass effect */
-  backdrop-filter: blur(var(--blur, 8px));
-  -webkit-backdrop-filter: blur(var(--blur, 8px));
+  backdrop-filter: blur(var(--blur));
+  -webkit-backdrop-filter: blur(var(--blur));
   background: rgba(255, 255, 255, 0.03);
-  border: 1px solid var(--border-color, rgba(255, 255, 255, 0.1));
+  border: 1px solid var(--border-color);
   box-shadow:
     0 8px 32px rgba(0, 0, 0, 0.3),
     inset 0 1px 0 rgba(255, 255, 255, 0.1);
