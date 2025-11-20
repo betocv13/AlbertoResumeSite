@@ -79,7 +79,49 @@
     font-size: 1rem;
     color: var(--muted);
   }
-  
+
+  /* --- Skeleton Loading -------------------------------------------------- */
+  @keyframes skeleton-shimmer {
+    0% {
+      background-position: -200% 0;
+    }
+    100% {
+      background-position: 200% 0;
+    }
+  }
+
+  .card--skeleton {
+    pointer-events: none;
+  }
+
+  .skeleton-img {
+    position: absolute;
+    inset: 6% 6% 120px 6%;
+    background: linear-gradient(90deg, #2a2a2a 25%, #3a3a3a 50%, #2a2a2a 75%);
+    background-size: 200% 100%;
+    animation: skeleton-shimmer 1.5s infinite;
+    border-radius: 12px;
+  }
+
+  .skeleton-title {
+    height: 1.6rem;
+    width: 60%;
+    background: linear-gradient(90deg, #2a2a2a 25%, #3a3a3a 50%, #2a2a2a 75%);
+    background-size: 200% 100%;
+    animation: skeleton-shimmer 1.5s infinite;
+    border-radius: 4px;
+    margin-bottom: 8px;
+  }
+
+  .skeleton-desc {
+    height: 1rem;
+    width: 80%;
+    background: linear-gradient(90deg, #2a2a2a 25%, #3a3a3a 50%, #2a2a2a 75%);
+    background-size: 200% 100%;
+    animation: skeleton-shimmer 1.5s infinite;
+    border-radius: 4px;
+  }
+
   /* --- Mobile ------------------------------------------------------------ */
   @media (max-width: 768px){
     .scroller{
@@ -90,4 +132,5 @@
     }
     .card{ height: 375px; }
     .card-img{ inset: 8% 8% 100px 8%; }   /* a bit more room for footer */
+    .skeleton-img{ inset: 8% 8% 100px 8%; }
   }
