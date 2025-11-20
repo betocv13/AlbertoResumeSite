@@ -5,6 +5,7 @@ import "./ProjectScroller.css";
 
 export default function ProjectsScroller() {
   const [items, setItems] = useState([]);
+  const [loading, setLoading] = useState(true);
 
   useEffect(() => {
     (async () => {
@@ -19,8 +20,26 @@ export default function ProjectsScroller() {
       } else {
         setItems(data || []);
       }
+      setLoading(false);
     })();
   }, []);
+
+  // Show skeleton cards while loading
+  if (loading) {
+    return (
+      <section className="scroller" aria-label="Projects loading">
+        {[...Array(4)].map((_, i) => (
+          <div key={i} className="card card--skeleton">
+            <div className="skeleton-img"></div>
+            <div className="card-footer">
+              <div className="skeleton-title"></div>
+              <div className="skeleton-desc"></div>
+            </div>
+          </div>
+        ))}
+      </section>
+    );
+  }
 
   if (!items.length) return null;
 
