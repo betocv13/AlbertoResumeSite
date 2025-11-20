@@ -38,8 +38,9 @@ function ReviewSection() {
         const trackRect = track.getBoundingClientRect();
         const cardRect = card.getBoundingClientRect();
 
-        // gap: 2rem = 32px (matches your CSS: gap: 2rem)
-        const gap = 32;
+        // Get gap from computed styles (works for both desktop and mobile)
+        const trackStyles = getComputedStyle(track);
+        const gap = parseFloat(trackStyles.gap || "0");
         const cardWidthWithGap = cardRect.width + gap;
 
         // how many full cards fit in the viewport
@@ -64,9 +65,9 @@ function ReviewSection() {
         const card = trackRef.current.querySelector(".reviews__card");
         if (!card) return;
 
-        const styles = getComputedStyle(card);
-        const marginRight = parseFloat(styles.marginRight || "0");
-        const width = card.getBoundingClientRect().width + marginRight;
+        const trackStyles = getComputedStyle(trackRef.current);
+        const gap = parseFloat(trackStyles.gap || "0");
+        const width = card.getBoundingClientRect().width + gap;
 
         trackRef.current.scrollTo({
             left: width * index,
