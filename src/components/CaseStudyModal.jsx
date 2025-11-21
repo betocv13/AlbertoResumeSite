@@ -43,7 +43,6 @@ export default function CaseStudyModal({ project, onClose }) {
     services = [],
     project_date,
     link_url,
-    case_study_images = [],
     sections = [],
   } = project;
 
@@ -207,35 +206,6 @@ export default function CaseStudyModal({ project, onClose }) {
               )}
             </div>
           </div>
-
-          {/* Image Gallery */}
-          {case_study_images.length > 0 && (
-            <div className="case-study-gallery">
-              {/* Hero image */}
-              <div className="case-study-hero">
-                <img
-                  src={case_study_images[0]}
-                  alt={`${title} hero`}
-                  loading="lazy"
-                />
-              </div>
-
-              {/* Two images side by side */}
-              {case_study_images.length > 1 && (
-                <div className="case-study-images-row">
-                  {case_study_images.slice(1, 3).map((img, idx) => (
-                    <div key={idx} className="case-study-image-half">
-                      <img
-                        src={img}
-                        alt={`${title} ${idx + 2}`}
-                        loading="lazy"
-                      />
-                    </div>
-                  ))}
-                </div>
-              )}
-            </div>
-          )}
 
           {/* Dynamic Sections */}
           {parsedSections.length > 0 && (

@@ -16,7 +16,7 @@ export default function ProjectsScroller() {
     (async () => {
       const { data, error } = await supabase
         .from("projects")
-        .select("id, title, description, image_url, link_url, sort_order, is_active, is_case_study, team, services, project_date, case_study_images, overview, sections")
+        .select("id, title, description, image_url, link_url, sort_order, is_active, is_case_study, team, services, project_date, overview, sections")
         .eq("is_active", true)
         .order("sort_order", { ascending: true });
 
