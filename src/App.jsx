@@ -22,6 +22,7 @@ import ContactSection from "./components/ContactSection";
 import ProjectsScroller from "./components/ProjectsScroller";
 import ApproachSection from "./components/ApproachSection";
 import ReviewSection from "./components/ReviewSection";
+import StatsSection from "./components/StatsSection";
 import "./App.css";
 
 const techIcons = [
@@ -78,6 +79,8 @@ export default function App() {
   speedMobile={0}    // 🚀 faster on phones
 />
           <ReviewSection />
+
+        <StatsSection />
 
         <ContactSection />
       </main>
