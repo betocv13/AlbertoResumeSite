@@ -4,7 +4,17 @@ import "./CaseStudyModal.css";
 export default function CaseStudyModal({ project, onClose }) {
   // Lock body scroll and handle Escape key
   useEffect(() => {
+    // Store original styles
     const originalOverflow = document.body.style.overflow;
+    const originalPosition = document.body.style.position;
+    const originalTop = document.body.style.top;
+    const originalWidth = document.body.style.width;
+    const scrollY = window.scrollY;
+
+    // Lock body scroll
+    document.body.style.position = "fixed";
+    document.body.style.top = `-${scrollY}px`;
+    document.body.style.width = "100%";
     document.body.style.overflow = "hidden";
 
     const handleEscape = (e) => {
@@ -13,7 +23,13 @@ export default function CaseStudyModal({ project, onClose }) {
     document.addEventListener("keydown", handleEscape);
 
     return () => {
+      // Restore original styles
+      document.body.style.position = originalPosition;
+      document.body.style.top = originalTop;
+      document.body.style.width = originalWidth;
       document.body.style.overflow = originalOverflow;
+      // Restore scroll position
+      window.scrollTo(0, scrollY);
       document.removeEventListener("keydown", handleEscape);
     };
   }, [onClose]);
