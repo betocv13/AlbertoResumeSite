@@ -284,11 +284,18 @@
 }
 
 /* Text sections */
+.case-study-section-text {
+  display: grid;
+  grid-template-columns: 1fr 2fr;
+  gap: clamp(40px, 6vw, 100px);
+  align-items: start;
+}
+
 .case-study-section-title {
   font-size: clamp(1.5rem, 4vw, 2.5rem);
   font-weight: 400;
   color: #fff;
-  margin: 0 0 24px 0;
+  margin: 0;
   letter-spacing: -0.02em;
 }
 
@@ -384,5 +391,10 @@
 
   .case-study-image-grid-item img {
     aspect-ratio: 16/10;
+  }
+
+  .case-study-section-text {
+    grid-template-columns: 1fr;
+    gap: 16px;
   }
 }
