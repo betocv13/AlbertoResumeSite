@@ -213,6 +213,13 @@
   background: transparent;
   border: 1px solid rgba(255, 255, 255, 0.3);
   border-radius: 20px;
+  transition: background 0.2s ease, color 0.2s ease, border-color 0.2s ease;
+}
+
+.case-study-pill:hover {
+  background: var(--accent);
+  color: #000;
+  border-color: #444;
 }
 
 /* --- Link --------------------------------------------------------------- */
