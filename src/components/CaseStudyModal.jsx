@@ -22,7 +22,7 @@ export default function CaseStudyModal({ project, onClose }) {
 
   const {
     title,
-    description,
+    overview,
     team = [],
     services = [],
     project_date,
@@ -64,10 +64,10 @@ export default function CaseStudyModal({ project, onClose }) {
           {/* Title */}
           <h1 className="case-study-title">{title}</h1>
 
-          {/* Two-column layout: description + metadata */}
+          {/* Two-column layout: overview + metadata */}
           <div className="case-study-info">
-            <div className="case-study-description">
-              <p>{description}</p>
+            <div className="case-study-overview">
+              <p>{overview}</p>
             </div>
 
             <div className="case-study-metadata">

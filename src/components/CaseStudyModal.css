@@ -6,6 +6,14 @@
   z-index: 1000;
   overflow-y: auto;
   -webkit-overflow-scrolling: touch;
+
+  /* Hide scrollbar */
+  scrollbar-width: none; /* Firefox */
+  -ms-overflow-style: none; /* IE/Edge */
+}
+
+.case-study-overlay::-webkit-scrollbar {
+  display: none; /* Chrome/Safari */
 }
 
 /* --- Modal Container ---------------------------------------------------- */
@@ -77,11 +85,11 @@
   margin-bottom: clamp(40px, 6vw, 80px);
 }
 
-.case-study-description {
+.case-study-overview {
   max-width: 500px;
 }
 
-.case-study-description p {
+.case-study-overview p {
   font-size: 1rem;
   line-height: 1.7;
   color: rgba(255, 255, 255, 0.75);
@@ -230,7 +238,7 @@
     gap: 32px;
   }
 
-  .case-study-description {
+  .case-study-overview {
     max-width: none;
   }
 
