@@ -44,11 +44,11 @@ body {
 .header {
   display: flex;
   align-items: center;  
-  min-height: 48px;     
+  min-height: 48px;
 }
 .hero h1{
-  font-size: 5.3rem;
-  line-height: 1.05;
+  font-size: 4.5rem;
+    line-height: 1.05;
   letter-spacing: -0.02em;
   margin: 24px 0 32px;
   font-weight: 400;
@@ -83,7 +83,6 @@ body {
 
 .hero { 
   margin-top: 100px;
-  margin-bottom: 100px;
 }
 
 /* Pill buttons (your current styles are fine) */

@@ -1,7 +1,11 @@
 .stats {
     margin: 100px 0;
-    padding: 60px 0;
 }
+.stats-title{
+    font-size: 2rem;
+    font-weight: 400;
+}
+
 
 .stats__container {
     display: flex;
@@ -19,10 +23,11 @@
 
 .stats__number {
     font-size: 4rem;
-    font-weight: 700;
+    font-weight: 400;
     color: var(--accent);
     line-height: 1;
     margin-bottom: 0.75rem;
+    margin-top: 3rem;
 }
 
 .stats__label {
@@ -33,6 +38,10 @@
 
 /* Tablet */
 @media (max-width: 992px) {
+    .stats-title{
+        font-size: 1.6rem;
+        font-weight: 400;
+    }
     .stats__container {
         gap: 1.5rem;
     }

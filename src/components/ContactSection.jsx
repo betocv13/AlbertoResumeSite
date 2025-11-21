@@ -1,13 +1,12 @@
 import "./ContactSection.css";
 import { SiGithub, SiLinkedin } from "react-icons/si";
-import { FiDownload } from "react-icons/fi";
+import { FiMail } from "react-icons/fi";
 
 export default function ContactSection() {
   // TODO: replace with your real email + links
   const email = "betito.castillo.98@icloud.com";
   const linkedin = "https://www.linkedin.com/in/alberto-s-053004288/";
   const github = "https://github.com/betocv13"; // update if needed
-  const resumeUrl = "https://zyxtcejariappicwkusz.supabase.co/storage/v1/object/public/Resume/AlbertoSotoResume.pdf";
 
 
   return (
@@ -19,7 +18,7 @@ export default function ContactSection() {
         <div className="contact-card">
           <h3>Let’s build your next project</h3>
           <p>
-            I focus on modern web apps with React/Vue, Supabase, and clean UI. Tell me about your idea and timeline — I’ll reply with next steps.
+            I focus on modern Web & Mobile Apps with clean UI. Tell me about your idea and timeline — I’ll reply with next steps.
           </p>
           <p>
             Email me at:{" "}
@@ -28,7 +27,10 @@ export default function ContactSection() {
             </a>
           </p>
 
-          <small className="availability">Available for new work — let’s chat.</small>
+            <small className="availability">
+                <span className="status-dot"></span>
+                Available for new work — let's chat.
+            </small>
         </div>
 
         {/* Elsewhere */}
@@ -46,9 +48,9 @@ export default function ContactSection() {
               </a>
             </li>
             <li>
-            <a href={resumeUrl} target="_blank" rel="noreferrer">
-                <FiDownload /> Download Résumé
-              </a>
+                <a href="mailto:betito.castillo.98@icloud.com">
+                    <FiMail /> Email
+                </a>
             </li>
           </ul>
         </div>

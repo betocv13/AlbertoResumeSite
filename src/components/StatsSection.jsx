@@ -10,7 +10,7 @@ function StatsSection() {
     const stats = [
         { value: 3, suffix: "", label: "Years of experience" },
         { value: 12.5, suffix: "K", label: "Followers on tiktok" },
-        { value: 12, suffix: "+", label: "Projects & counting" },
+        { value: 18, suffix: "+", label: "Projects & counting" },
     ];
 
     // Intersection Observer to detect when section is in view
@@ -79,6 +79,7 @@ function StatsSection() {
 
     return (
         <section className="stats" ref={sectionRef}>
+            <h2 className="stats-title">Statistics</h2>
             <div className="stats__container">
                 {stats.map((stat, index) => (
                     <div key={stat.label} className="stats__item">

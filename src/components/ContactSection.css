@@ -26,7 +26,29 @@ border-color: #323232;
 .contact-card p  { color: var(--muted); line-height: 1.7; margin: 16px 0; }
 .contact-link { color: var(--text); border-bottom: 1px solid #444; text-decoration: none; }
 .availability { display: block; margin-top: 28px; color: var(--muted); }
+.availability {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.5rem;
+}
 
+.status-dot {
+    width: 8px;
+    height: 8px;
+    background-color: #22c55e;
+    border-radius: 50%;
+    box-shadow: 0 0 8px #22c55e, 0 0 16px #22c55e;
+    animation: pulse 2s ease-in-out infinite;
+}
+
+@keyframes pulse {
+    0%, 100% {
+        box-shadow: 0 0 8px #22c55e, 0 0 16px #22c55e;
+    }
+    50% {
+        box-shadow: 0 0 12px #22c55e, 0 0 24px #22c55e;
+    }
+}
 /* Elsewhere column */
 .elsewhere h3 { font-size: 1.6rem; margin: 0 0 16px; }
 .elsewhere-list {
