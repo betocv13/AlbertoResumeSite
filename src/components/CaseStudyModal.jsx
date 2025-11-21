@@ -44,10 +44,61 @@ export default function CaseStudyModal({ project, onClose }) {
     project_date,
     link_url,
     case_study_images = [],
+    sections = [],
   } = project;
 
   // Parse team if it's a string
   const teamMembers = typeof team === "string" ? JSON.parse(team) : team;
+
+  // Parse sections if it's a string
+  const parsedSections = typeof sections === "string" ? JSON.parse(sections) : sections;
+
+  // Render a section based on its type
+  const renderSection = (section, idx) => {
+    if (section.type === "text") {
+      return (
+        <div key={idx} className="case-study-section case-study-section-text">
+          {section.title && <h2 className="case-study-section-title">{section.title}</h2>}
+          {section.content && <p className="case-study-section-content">{section.content}</p>}
+        </div>
+      );
+    }
+
+    if (section.type === "image") {
+      const images = section.images || [];
+      const layout = section.layout || "full";
+
+      return (
+        <div key={idx} className={`case-study-section case-study-section-image layout-${layout}`}>
+          {layout === "full" && images[0] && (
+            <div className="case-study-hero">
+              <img src={images[0]} alt="" loading="lazy" />
+            </div>
+          )}
+          {layout === "half" && (
+            <div className="case-study-images-row">
+              {images.slice(0, 2).map((img, i) => (
+                <div key={i} className="case-study-image-half">
+                  <img src={img} alt="" loading="lazy" />
+                </div>
+              ))}
+            </div>
+          )}
+          {layout === "grid" && (
+            <div className="case-study-images-grid">
+              {images.map((img, i) => (
+                <div key={i} className="case-study-image-grid-item">
+                  <img src={img} alt="" loading="lazy" />
+                </div>
+              ))}
+            </div>
+          )}
+        </div>
+      );
+    }
+
+    return null;
+  };
 
   return (
     <div className="case-study-overlay" onClick={onClose}>
@@ -183,6 +234,13 @@ export default function CaseStudyModal({ project, onClose }) {
                   ))}
                 </div>
               )}
+            </div>
+          )}
+
+          {/* Dynamic Sections */}
+          {parsedSections.length > 0 && (
+            <div className="case-study-sections">
+              {parsedSections.map((section, idx) => renderSection(section, idx))}
             </div>
           )}
         </div>
