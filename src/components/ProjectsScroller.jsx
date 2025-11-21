@@ -1,6 +1,7 @@
 import { useEffect, useState, useRef } from "react";
 import { supabase } from "../supabaseClient";
 import ProjectCard from "./ProjectCard";
+import CaseStudyModal from "./CaseStudyModal";
 import "./ProjectScroller.css";
 
 export default function ProjectsScroller() {
@@ -8,13 +9,14 @@ export default function ProjectsScroller() {
   const [loading, setLoading] = useState(true);
   const [isAtStart, setIsAtStart] = useState(true);
   const [isAtEnd, setIsAtEnd] = useState(false);
+  const [selectedProject, setSelectedProject] = useState(null);
   const scrollerRef = useRef(null);
 
   useEffect(() => {
     (async () => {
       const { data, error } = await supabase
         .from("projects")
-        .select("id, title, description, image_url, link_url, sort_order, is_active")
+        .select("id, title, description, image_url, link_url, sort_order, is_active, is_case_study, team, services, project_date, case_study_images")
         .eq("is_active", true)
         .order("sort_order", { ascending: true });
 
@@ -86,6 +88,8 @@ export default function ProjectsScroller() {
             description={p.description}
             imageUrl={p.image_url}
             linkUrl={p.link_url}
+            isCaseStudy={p.is_case_study}
+            onCaseStudyClick={() => setSelectedProject(p)}
           />
         ))}
       </div>
@@ -118,6 +122,14 @@ export default function ProjectsScroller() {
             <path d="M5 12h14M12 5l7 7-7 7"/>
           </svg>
         </button>
+      )}
+
+      {/* Case Study Modal */}
+      {selectedProject && (
+        <CaseStudyModal
+          project={selectedProject}
+          onClose={() => setSelectedProject(null)}
+        />
       )}
     </section>
   );
