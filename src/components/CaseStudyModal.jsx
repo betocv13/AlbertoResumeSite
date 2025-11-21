@@ -93,13 +93,14 @@ export default function CaseStudyModal({ project, onClose }) {
                   <span className="case-study-label">TEAM</span>
                   <div className="case-study-team">
                     {teamMembers.map((member, idx) => (
-                      <img
-                        key={idx}
-                        src={member.avatar_url}
-                        alt={member.name}
-                        className="case-study-avatar"
-                        title={member.name}
-                      />
+                      <div key={idx} className="case-study-avatar-wrapper">
+                        <img
+                          src={member.avatar_url}
+                          alt={member.name}
+                          className="case-study-avatar"
+                        />
+                        <span className="case-study-avatar-name">{member.name}</span>
+                      </div>
                     ))}
                   </div>
                 </div>
