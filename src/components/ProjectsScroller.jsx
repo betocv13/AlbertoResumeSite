@@ -4,6 +4,16 @@ import ProjectCard from "./ProjectCard";
 import CaseStudyModal from "./CaseStudyModal";
 import "./ProjectScroller.css";
 
+// Helper: Convert project title to URL-friendly slug
+function slugify(str) {
+  return str
+    .toLowerCase()
+    .trim()
+    .replace(/[^\w\s-]/g, "") // Remove special chars
+    .replace(/\s+/g, "-")     // Spaces to hyphens
+    .replace(/-+/g, "-");     // Collapse multiple hyphens
+}
+
 export default function ProjectsScroller() {
   const [items, setItems] = useState([]);
   const [loading, setLoading] = useState(true);
@@ -12,6 +22,7 @@ export default function ProjectsScroller() {
   const [selectedProject, setSelectedProject] = useState(null);
   const scrollerRef = useRef(null);
 
+  // Fetch projects from Supabase
   useEffect(() => {
     (async () => {
       const { data, error } = await supabase
@@ -28,6 +39,38 @@ export default function ProjectsScroller() {
       setLoading(false);
     })();
   }, []);
+
+  // Open project from URL hash on initial load
+  useEffect(() => {
+    if (!items.length) return;
+
+    const hash = window.location.hash.slice(1); // Remove '#'
+    if (hash) {
+      const project = items.find((p) => slugify(p.title) === hash);
+      if (project && project.is_case_study) {
+        setSelectedProject(project);
+      }
+    }
+  }, [items]);
+
+  // Listen for hash changes (browser back/forward)
+  useEffect(() => {
+    const handleHashChange = () => {
+      const hash = window.location.hash.slice(1);
+
+      if (!hash) {
+        setSelectedProject(null);
+      } else {
+        const project = items.find((p) => slugify(p.title) === hash);
+        if (project && project.is_case_study) {
+          setSelectedProject(project);
+        }
+      }
+    };
+
+    window.addEventListener("hashchange", handleHashChange);
+    return () => window.removeEventListener("hashchange", handleHashChange);
+  }, [items]);
 
   // Track scroll position
   useEffect(() => {
@@ -78,6 +121,17 @@ export default function ProjectsScroller() {
 
   if (!items.length) return null;
 
+  // Handle opening a case study (updates URL hash)
+  const openCaseStudy = (project) => {
+    window.location.hash = slugify(project.title);
+  };
+
+  // Handle closing case study (removes hash)
+  const closeCaseStudy = () => {
+    window.history.replaceState(null, "", window.location.pathname);
+    setSelectedProject(null);
+  };
+
   return (
     <section className="scroller-wrapper">
       <div className="scroller" ref={scrollerRef} aria-label="Projects">
@@ -89,7 +143,7 @@ export default function ProjectsScroller() {
             imageUrl={p.image_url}
             linkUrl={p.link_url}
             isCaseStudy={p.is_case_study}
-            onCaseStudyClick={() => setSelectedProject(p)}
+            onCaseStudyClick={() => openCaseStudy(p)}
           />
         ))}
       </div>
@@ -128,7 +182,7 @@ export default function ProjectsScroller() {
       {selectedProject && (
         <CaseStudyModal
           project={selectedProject}
-          onClose={() => setSelectedProject(null)}
+          onClose={closeCaseStudy}
         />
       )}
     </section>

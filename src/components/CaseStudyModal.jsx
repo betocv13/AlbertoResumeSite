@@ -96,6 +96,91 @@ export default function CaseStudyModal({ project, onClose }) {
       );
     }
 
+    if (section.type === "video") {
+      const videos = section.videos || [];
+      const layout = section.layout || "full";
+      const poster = section.poster;
+
+      return (
+        <div key={idx} className={`case-study-section case-study-section-video layout-${layout}`}>
+          {layout === "full" && videos[0] && (
+            <div className="case-study-hero">
+              <video
+                src={videos[0]}
+                poster={poster}
+                autoPlay
+                loop
+                muted
+                playsInline
+                preload="metadata"
+              />
+            </div>
+          )}
+          {layout === "half" && (
+            <div className="case-study-images-row">
+              {videos.slice(0, 2).map((vid, i) => (
+                <div key={i} className="case-study-image-half">
+                  <video
+                    src={vid}
+                    autoPlay
+                    loop
+                    muted
+                    playsInline
+                    preload="metadata"
+                  />
+                </div>
+              ))}
+            </div>
+          )}
+          {layout === "grid" && (
+            <div className="case-study-images-grid">
+              {videos.map((vid, i) => (
+                <div key={i} className="case-study-image-grid-item">
+                  <video
+                    src={vid}
+                    autoPlay
+                    loop
+                    muted
+                    playsInline
+                    preload="metadata"
+                  />
+                </div>
+              ))}
+            </div>
+          )}
+        </div>
+      );
+    }
+
+    if (section.type === "mixed") {
+      const media = section.media || [];
+      const layout = section.layout || "half";
+
+      return (
+        <div key={idx} className={`case-study-section case-study-section-mixed layout-${layout}`}>
+          <div className="case-study-images-row">
+            {media.slice(0, 2).map((item, i) => (
+              <div key={i} className="case-study-image-half">
+                {item.type === "video" ? (
+                  <video
+                    src={item.url}
+                    poster={item.poster}
+                    autoPlay
+                    loop
+                    muted
+                    playsInline
+                    preload="metadata"
+                  />
+                ) : (
+                  <img src={item.url} alt="" loading="lazy" />
+                )}
+              </div>
+            ))}
+          </div>
+        </div>
+      );
+    }
+
     return null;
   };
 
