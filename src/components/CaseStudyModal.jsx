@@ -112,7 +112,12 @@ export default function CaseStudyModal({ project, onClose }) {
                 loop
                 muted
                 playsInline
-                preload="metadata"
+                preload="auto"
+                onLoadedMetadata={(e) => {
+                  e.target.play().catch(() => {
+                    // Autoplay blocked - video will show poster
+                  });
+                }}
               />
             </div>
           )}
@@ -126,7 +131,10 @@ export default function CaseStudyModal({ project, onClose }) {
                     loop
                     muted
                     playsInline
-                    preload="metadata"
+                    preload="auto"
+                    onLoadedMetadata={(e) => {
+                      e.target.play().catch(() => {});
+                    }}
                   />
                 </div>
               ))}
@@ -142,7 +150,10 @@ export default function CaseStudyModal({ project, onClose }) {
                     loop
                     muted
                     playsInline
-                    preload="metadata"
+                    preload="auto"
+                    onLoadedMetadata={(e) => {
+                      e.target.play().catch(() => {});
+                    }}
                   />
                 </div>
               ))}
@@ -169,7 +180,10 @@ export default function CaseStudyModal({ project, onClose }) {
                     loop
                     muted
                     playsInline
-                    preload="metadata"
+                    preload="auto"
+                    onLoadedMetadata={(e) => {
+                      e.target.play().catch(() => {});
+                    }}
                   />
                 ) : (
                   <img src={item.url} alt="" loading="lazy" />
