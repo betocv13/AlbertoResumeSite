@@ -152,6 +152,35 @@ export default function CaseStudyModal({ project, onClose }) {
       );
     }
 
+    if (section.type === "mixed") {
+      const media = section.media || [];
+      const layout = section.layout || "half";
+
+      return (
+        <div key={idx} className={`case-study-section case-study-section-mixed layout-${layout}`}>
+          <div className="case-study-images-row">
+            {media.slice(0, 2).map((item, i) => (
+              <div key={i} className="case-study-image-half">
+                {item.type === "video" ? (
+                  <video
+                    src={item.url}
+                    poster={item.poster}
+                    autoPlay
+                    loop
+                    muted
+                    playsInline
+                    preload="metadata"
+                  />
+                ) : (
+                  <img src={item.url} alt="" loading="lazy" />
+                )}
+              </div>
+            ))}
+          </div>
+        </div>
+      );
+    }
+
     return null;
   };
 
