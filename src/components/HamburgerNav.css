@@ -68,14 +68,21 @@
   transform: rotate(-45deg);
 }
 
-/* Menu panel */
+/* Menu panel -- translucent, with page content blurred/dimmed behind it
+   rather than fully hidden. Since it's fixed-position, it can end up over
+   anything as the page scrolls beneath it (plain black background most of
+   the time, but potentially a lighter project image or photo), so the
+   panel needs a floor darkness that keeps text legible even over a
+   worst-case bright backdrop -- not just against black. */
 .hamburger-menu {
   position: fixed;
   top: 96px;
   right: 23px;
   z-index: 1000;
   width: min(280px, calc(100vw - 46px));
-  background: var(--panel);
+  background: rgba(15, 15, 15, 0.72);
+  backdrop-filter: blur(14px);
+  -webkit-backdrop-filter: blur(14px);
   border: 1px solid #2a2a2a;
   border-radius: 20px;
   padding: 12px;
@@ -84,6 +91,14 @@
   transform: translateY(-8px);
   pointer-events: none;
   transition: opacity 0.18s ease, transform 0.18s ease;
+}
+
+/* Browsers without backdrop-filter support get a near-solid panel instead
+   of an under-blurred, too-see-through one. */
+@supports not ((backdrop-filter: blur(1px)) or (-webkit-backdrop-filter: blur(1px))) {
+  .hamburger-menu {
+    background: rgba(10, 10, 10, 0.94);
+  }
 }
 
 .hamburger-menu.is-open {
@@ -107,10 +122,16 @@
   gap: 10px;
   padding: 12px 14px;
   border-radius: 12px;
-  color: var(--muted);
+  /* var(--muted) (#9a9a9a) reads fine on the site's normal opaque dark
+     backgrounds, but this panel is translucent and can sit over a bright
+     image while scrolled -- #9a9a9a would drop under 3:1 in that worst
+     case. This lighter gray keeps ~5:1+ even blended over a worst-case
+     white backdrop, verified with a probe test. */
+  color: #c7c7c7;
   font-size: 1.05rem;
   font-weight: 400;
   text-decoration: none;
+  text-shadow: 0 1px 3px rgba(0, 0, 0, 0.6);
   transition: background 0.15s ease, color 0.15s ease;
 }
 
@@ -156,13 +177,35 @@
   .hamburger-toggle {
     top: 20px;
     right: 16px;
-    width: 48px;
-    height: 48px;
+    width: 40px;              /* down from 48px (~17%) */
+    height: 40px;
+  }
+
+  .hamburger-icon {
+    width: 16px;               /* down from 20px, same ratio as the button */
+    height: 11px;              /* down from 14px */
+  }
+
+  .hamburger-icon span:nth-child(1) { top: 0; }
+  .hamburger-icon span:nth-child(2) { top: 4.5px; }
+  .hamburger-icon span:nth-child(3) { top: 9px; }
+
+  /* Only the resting position needs to move to match the smaller icon --
+     the rotate() transform itself still comes from the base rule above. */
+  .hamburger-toggle.is-open .hamburger-icon span:nth-child(1),
+  .hamburger-toggle.is-open .hamburger-icon span:nth-child(3) {
+    top: 4.5px;
   }
 
   .hamburger-menu {
-    top: 76px;
+    top: 64px;
     right: 16px;
-    width: min(260px, calc(100vw - 32px));
+    width: min(240px, calc(100vw - 32px));
+    padding: 8px;
+  }
+
+  .hamburger-link {
+    padding: 10px 12px;
+    font-size: 0.95rem;
   }
 }
