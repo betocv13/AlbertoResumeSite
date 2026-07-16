@@ -104,7 +104,7 @@ export default function ProjectsScroller() {
   if (loading) {
     return (
       <section id="work" className="scroller-wrapper">
-        <h2 className="section-heading work-title">Work</h2>
+        <h2 className="sr-only">Work</h2>
         <div className="scroller" aria-label="Projects loading">
           {[...Array(4)].map((_, i) => (
             <div key={i} className="card card--skeleton">
@@ -135,7 +135,7 @@ export default function ProjectsScroller() {
 
   return (
     <section id="work" className="scroller-wrapper">
-      <h2 className="section-heading work-title">Work</h2>
+      <h2 className="sr-only">Work</h2>
       <div className="scroller" ref={scrollerRef} aria-label="Projects">
         {items.map((p) => (
           <ProjectCard

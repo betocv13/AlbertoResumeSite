@@ -61,6 +61,21 @@ body {
   min-height: 48px;
 }
 
+/* Visually hidden but still present for assistive tech and the document
+   outline -- do not use display:none/visibility:hidden, which would also
+   remove it from the accessibility tree. */
+.sr-only {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  padding: 0;
+  margin: -1px;
+  overflow: hidden;
+  clip: rect(0, 0, 0, 0);
+  white-space: nowrap;
+  border: 0;
+}
+
 /* Single source of truth for every section's <h2> title.
    Compose with a component-specific class for any layout-only overrides. */
 .section-heading {
