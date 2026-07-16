@@ -201,8 +201,20 @@
         padding: 0 1rem;
     }
 
+    /* Same fix as the Work carousel: .container's 24px side padding was
+       constraining this carousel's viewport too, leaving a dead strip
+       between the peeking card and the true screen edge. Break just the
+       carousel out to full width and move the left inset onto the track
+       so the first card still aligns with the rest of the page. */
+    .reviews__carousel {
+        width: 100dvw;
+        margin-left: calc(50% - 50dvw);
+    }
+
     .reviews__track {
         gap: 1rem;
+        padding-left: 24px;
+        padding-right: 0;
     }
 
     /* Single-card view on mobile */

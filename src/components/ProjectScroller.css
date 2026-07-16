@@ -225,14 +225,36 @@
 
   /* --- Mobile ------------------------------------------------------------ */
   @media (max-width: 768px){
+    /* .container has 24px of side padding everywhere else on the page, and
+       this carousel inherited it too -- so the peeking card's edge always
+       stopped 24px short of the true screen edge instead of bleeding to it.
+       Break the wrapper out to full viewport width, then restore just the
+       left inset (so the first card still lines up with the rest of the
+       page) and drop the right inset entirely so only the intended
+       inter-card `gap` separates the peek from the screen edge. */
+    .scroller-wrapper {
+      width: 100dvw;
+      margin-left: calc(50% - 50dvw);
+    }
     .scroller{
       gap: 20px;
+      padding-left: 24px;
+      padding-right: 0;
     }
     .scroller > *{
       flex-basis: 85%;                    /* nice big cards on phones */
     }
+    .card{
+      aspect-ratio: 4 / 5.5;              /* a touch taller now that the type below is smaller */
+    }
     .card-img{ inset: 8% 8% 100px 8%; }   /* a bit more room for footer */
     .skeleton-img{ inset: 8% 8% 100px 8%; }
+    .card-title{
+      font-size: 1.4rem;                  /* down from 1.6rem (~12.5%) */
+    }
+    .card-desc{
+      font-size: 0.875rem;                /* down from 1rem (~12.5%), matching the title's step */
+    }
 
     /* Hide arrows and fades on mobile */
     .scroller-fade,
