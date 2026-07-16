@@ -30,7 +30,7 @@ function ApproachSection() {
     }
 
     return (
-        <section className="approach">
+        <section id="approach" className="approach">
             <h2 className="section-heading approach__title">Approach</h2>
 
             <div className="approach__grid">

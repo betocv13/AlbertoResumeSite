@@ -3,7 +3,9 @@
   position: fixed;
   inset: 0;
   background: #000;
-  z-index: 1000;
+  /* Must sit above HamburgerNav's toggle (1001) and menu (1000) so the
+     nav isn't clickable/visible behind an open modal. */
+  z-index: 1200;
   overflow-y: auto;
   -webkit-overflow-scrolling: touch;
 

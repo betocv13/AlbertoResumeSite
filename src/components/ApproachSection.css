@@ -21,7 +21,10 @@
 .approach__number {
     font-size: 1.2rem;
     font-weight: 400;
-    color: #6b7280;
+    /* #6b7280 measured 4.35:1 on #000 -- fails WCAG AA for this
+       weight/size. var(--muted) measures 7.46:1 and matches every
+       other secondary-text color on the page. */
+    color: var(--muted);
     flex-shrink: 0;
 }
 

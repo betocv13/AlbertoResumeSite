@@ -14,7 +14,7 @@ import {
   SiCss3,
   SiJavascript,
 } from "react-icons/si";
-import RightPillNav from "./components/RightPillNav";
+import HamburgerNav from "./components/HamburgerNav";
 import AboutSection from "./components/AboutSection";
 import CapabilitiesSection from "./components/CapabilitiesSection";
 import LogoLoopIcons from "./components/LogoLoopIcons";
@@ -46,7 +46,7 @@ const techIcons = [
 export default function App() {
   return (
     <>
-      <RightPillNav />
+      <HamburgerNav />
 
       <main className="container">
         {/* Top-left name */}
@@ -55,7 +55,7 @@ export default function App() {
         </header>
 
         {/* Big headline like the reference */}
-        <section id="work" className="hero">
+        <section id="home" className="hero">
         <h1>Software Engineer Blending Code & Design</h1>
         </section>
 

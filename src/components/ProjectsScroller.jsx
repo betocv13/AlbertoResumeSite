@@ -103,7 +103,8 @@ export default function ProjectsScroller() {
   // Show skeleton cards while loading
   if (loading) {
     return (
-      <section className="scroller-wrapper">
+      <section id="work" className="scroller-wrapper">
+        <h2 className="section-heading work-title">Work</h2>
         <div className="scroller" aria-label="Projects loading">
           {[...Array(4)].map((_, i) => (
             <div key={i} className="card card--skeleton">
@@ -133,7 +134,8 @@ export default function ProjectsScroller() {
   };
 
   return (
-    <section className="scroller-wrapper">
+    <section id="work" className="scroller-wrapper">
+      <h2 className="section-heading work-title">Work</h2>
       <div className="scroller" ref={scrollerRef} aria-label="Projects">
         {items.map((p) => (
           <ProjectCard

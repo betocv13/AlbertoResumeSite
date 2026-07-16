@@ -1,9 +1,18 @@
-import { useEffect } from "react";
+import { useEffect, useRef } from "react";
 import "./CaseStudyModal.css";
 
+const FOCUSABLE_SELECTOR =
+  'a[href], button:not([disabled]), textarea, input, select, [tabindex]:not([tabindex="-1"])';
+
 export default function CaseStudyModal({ project, onClose }) {
-  // Lock body scroll and handle Escape key
+  const modalRef = useRef(null);
+  const closeButtonRef = useRef(null);
+  const previouslyFocusedRef = useRef(null);
+
+  // Lock body scroll, move focus in, handle Escape, restore focus on close.
   useEffect(() => {
+    previouslyFocusedRef.current = document.activeElement;
+
     // Store original styles
     const originalOverflow = document.body.style.overflow;
     const originalPosition = document.body.style.position;
@@ -16,6 +25,8 @@ export default function CaseStudyModal({ project, onClose }) {
     document.body.style.top = `-${scrollY}px`;
     document.body.style.width = "100%";
     document.body.style.overflow = "hidden";
+
+    closeButtonRef.current?.focus();
 
     const handleEscape = (e) => {
       if (e.key === "Escape") onClose();
@@ -31,8 +42,36 @@ export default function CaseStudyModal({ project, onClose }) {
       // Restore scroll position
       window.scrollTo(0, scrollY);
       document.removeEventListener("keydown", handleEscape);
+      // Return focus to whatever opened the modal
+      previouslyFocusedRef.current?.focus?.();
     };
   }, [onClose]);
+
+  // Trap Tab/Shift+Tab focus within the modal while it's open.
+  useEffect(() => {
+    const handleTab = (e) => {
+      if (e.key !== "Tab" || !modalRef.current) return;
+
+      const focusable = Array.from(
+        modalRef.current.querySelectorAll(FOCUSABLE_SELECTOR)
+      );
+      if (!focusable.length) return;
+
+      const first = focusable[0];
+      const last = focusable[focusable.length - 1];
+
+      if (e.shiftKey && document.activeElement === first) {
+        e.preventDefault();
+        last.focus();
+      } else if (!e.shiftKey && document.activeElement === last) {
+        e.preventDefault();
+        first.focus();
+      }
+    };
+
+    document.addEventListener("keydown", handleTab);
+    return () => document.removeEventListener("keydown", handleTab);
+  }, []);
 
   if (!project) return null;
 
@@ -200,11 +239,19 @@ export default function CaseStudyModal({ project, onClose }) {
 
   return (
     <div className="case-study-overlay" onClick={onClose}>
-      <div className="case-study-modal" onClick={(e) => e.stopPropagation()}>
+      <div
+        className="case-study-modal"
+        onClick={(e) => e.stopPropagation()}
+        ref={modalRef}
+        role="dialog"
+        aria-modal="true"
+        aria-labelledby="case-study-title"
+      >
         {/* Header */}
         <header className="case-study-header">
           <div className="case-study-name">Alberto Soto-Vargas</div>
           <button
+            ref={closeButtonRef}
             className="case-study-close"
             onClick={onClose}
             aria-label="Close case study"
@@ -227,7 +274,7 @@ export default function CaseStudyModal({ project, onClose }) {
         {/* Content */}
         <div className="case-study-content">
           {/* Title */}
-          <h1 className="case-study-title">{title}</h1>
+          <h2 id="case-study-title" className="case-study-title">{title}</h2>
 
           {/* Two-column layout: overview + metadata */}
           <div className="case-study-info">

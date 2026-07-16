@@ -29,8 +29,17 @@ export default function LogoLoopIcons({
       aria-hidden={ariaHidden || undefined}
     >
       {icons.map((item, i) => (
-        <div className="logo-item icon" key={i} title={item.label ?? ""}>
-          <div style={{ width: `var(--logo-height)`, height: `var(--logo-height)` }}>
+        <div
+          className="logo-item icon"
+          key={i}
+          title={item.label ?? ""}
+          role="img"
+          aria-label={item.label ?? ""}
+        >
+          <div
+            style={{ width: `var(--logo-height)`, height: `var(--logo-height)` }}
+            aria-hidden="true"
+          >
             {item.el}
           </div>
         </div>
@@ -39,7 +48,7 @@ export default function LogoLoopIcons({
   );
 
   return (
-    <section className="logo-loop-section">
+    <section id="tech-stack" className="logo-loop-section">
     <h2 className="section-heading logo-loop-title">{title}</h2>
     <div className="logo-loop-mask">
       <div className="logo-loop-rail" style={vars}>
