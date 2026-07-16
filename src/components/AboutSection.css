@@ -1,12 +1,7 @@
 .about {
-    margin: 100px 0;
+    margin: var(--section-gap) 0;
   }
-  
-  .about-title {
-      font-size: 2rem;
-      font-weight: 400;
-  }
-  
+
   .about-grid {
     display: grid;
     grid-template-columns: 475px 1fr;
@@ -93,6 +88,9 @@
   
   /* Mobile stack */
   @media (max-width: 992px) {
+    .about {
+      margin: var(--section-gap-tablet) 0;
+    }
     .about-grid {
       grid-template-columns: 1fr;
       gap: 20px;
@@ -102,10 +100,6 @@
       border-radius:12px;
       object-position: top;
     }
-    .about-title { 
-        font-size: 1.6rem;
-        margin: 0 0 24px 0;
-     }
 
     .about-heading {
         font-size: 1.5rem;
@@ -120,6 +114,9 @@
       }
   }
   @media (max-width: 768px) {
+    .about {
+      margin: var(--section-gap-mobile) 0;
+    }
     .about-grid {
       grid-template-columns: 1fr;
       gap: 20px;

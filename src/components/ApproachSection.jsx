@@ -31,7 +31,7 @@ function ApproachSection() {
 
     return (
         <section className="approach">
-            <h2 className="approach__title">Approach</h2>
+            <h2 className="section-heading approach__title">Approach</h2>
 
             <div className="approach__grid">
                 {items.map((item) => (

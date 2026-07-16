@@ -109,7 +109,7 @@ function ReviewSection() {
     if (error) {
         return (
             <section className="reviews">
-                <h2 className="reviews__title">In their words</h2>
+                <h2 className="section-heading reviews__title">In their words</h2>
                 <p style={{ color: "#9ca3af", textAlign: "center" }}>
                     Unable to load reviews at this time.
                 </p>
@@ -165,7 +165,7 @@ function ReviewSection() {
 
     return (
         <section className="reviews">
-            <h2 className="reviews__title">In their words</h2>
+            <h2 className="section-heading reviews__title">In their words</h2>
 
             <div className="reviews__carousel">
                 <div className="reviews__track" ref={trackRef}>

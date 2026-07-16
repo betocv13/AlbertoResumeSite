@@ -16,6 +16,20 @@
   --text:#eaeaea;
   --muted:#9a9a9a;
   --accent:#ffffff;
+
+  /* Spacing scale */
+  --space-1: 8px;
+  --space-2: 16px;
+  --space-3: 24px;
+  --space-4: 32px;
+  --space-5: 48px;
+  --space-6: 64px;
+  --space-7: 96px;
+
+  /* Vertical rhythm between major sections */
+  --section-gap: var(--space-7);   /* 96px desktop */
+  --section-gap-tablet: 72px;      /* <=992px */
+  --section-gap-mobile: 56px;      /* <=768px */
 }
 
 a {
@@ -43,8 +57,27 @@ body {
 
 .header {
   display: flex;
-  align-items: center;  
+  align-items: center;
   min-height: 48px;
+}
+
+/* Single source of truth for every section's <h2> title.
+   Compose with a component-specific class for any layout-only overrides. */
+.section-heading {
+  font-size: 2rem;
+  font-weight: 400;
+  line-height: 1.2;
+  letter-spacing: normal;
+  color: var(--text);
+  margin: 0 0 var(--space-4) 0;
+  text-align: left;
+}
+
+@media (max-width: 992px) {
+  .section-heading {
+    font-size: 1.6rem;
+    margin-bottom: var(--space-3);
+  }
 }
 .hero h1{
   font-size: 4.5rem;
@@ -81,8 +114,9 @@ body {
   }
 }
 
-.hero { 
+.hero {
   margin-top: 100px;
+  margin-bottom: var(--section-gap);
 }
 
 /* Pill buttons (your current styles are fine) */
@@ -140,7 +174,7 @@ body {
   }
   .hero {
      margin-top: 0px;
-     margin-bottom: 0px;
+     margin-bottom: var(--section-gap-mobile);
     }
 }
 

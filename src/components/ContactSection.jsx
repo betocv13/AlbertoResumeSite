@@ -11,7 +11,7 @@ export default function ContactSection() {
 
   return (
     <section id="contact" className="contact">
-      <h2 className="contact-title">Contact</h2>
+      <h2 className="section-heading contact-title">Contact</h2>
 
       <div className="contact-grid">
         {/* Left card */}

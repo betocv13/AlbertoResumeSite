@@ -17,7 +17,7 @@ export default function AboutSection() {
 
   return (
     <section id="about" className="about">
-      <h2 className="about-title">About</h2>
+      <h2 className="section-heading about-title">About</h2>
 
       <div className="about-grid">
         <div className="about-photo">

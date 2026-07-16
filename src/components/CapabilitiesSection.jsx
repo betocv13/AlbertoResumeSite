@@ -21,7 +21,7 @@ export default function CapabilitiesSection() {
   return (
     <section id="capabilities" className="capabilities">
       <div className="cap-grid">
-        <h2 className="cap-title">Capabilities</h2>
+        <h2 className="section-heading cap-title">Capabilities</h2>
 
         <div className="cap-list">
           {capabilities.map((c) => (

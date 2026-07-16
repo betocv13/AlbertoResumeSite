@@ -1,11 +1,5 @@
 .approach {
-    margin: 100px 0;
-}
-
-.approach__title {
-    font-size: 2rem;
-    font-weight: 400;
-    color: #fff;
+    margin: var(--section-gap) 0;
 }
 
 /* Desktop grid */
@@ -52,6 +46,10 @@
 ----------------------------------*/
 
 @media (max-width: 992px) {
+    .approach {
+        margin: var(--section-gap-mobile) 0;
+    }
+
     .approach__grid {
         padding: 0 .3rem;
         grid-template-columns: 1fr; /* stack */
@@ -60,10 +58,6 @@
 
     .approach__item {
         gap: 1rem;
-    }
-
-    .approach__title {
-        font-size: 1.6rem;
     }
 
     .approach__text {

@@ -79,7 +79,7 @@ function StatsSection() {
 
     return (
         <section className="stats" ref={sectionRef}>
-            <h2 className="stats-title">Statistics</h2>
+            <h2 className="section-heading stats-title">Statistics</h2>
             <div className="stats__container">
                 {stats.map((stat, index) => (
                     <div key={stat.label} className="stats__item">

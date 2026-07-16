@@ -1,7 +1,7 @@
 .capabilities {
-    margin: 100px 0;
+    margin: var(--section-gap) 0;
   }
-  
+
   /* 2-col on desktop: title left, pills right */
   .cap-grid {
     display: grid;
@@ -9,12 +9,12 @@
     column-gap: 80px;
     align-items: start;           /* top-align both columns */
   }
-  
-  .cap-title {
+
+  /* Title sits beside the pills, not above them -- override the shared
+     .section-heading margin so it doesn't push the row taller. */
+  .section-heading.cap-title {
     grid-column: 1;
-    font-size: 2rem;
-    font-weight: 400;
-    margin: 0;                    /* so first pill aligns with title */
+    margin: 0;
   }
   
   /* Pills live in column 2 */
@@ -60,17 +60,20 @@
   
   /* Mobile: stack pills under header */
   @media (max-width: 992px) {
+    .capabilities {
+      margin: var(--section-gap-tablet) 0;
+    }
     .cap-grid {
       grid-template-columns: 1fr;
       column-gap: 0;          /* optional: remove desktop gap */
     }
-  
-    .cap-title {
+
+    /* Pills now stack below the title, so it needs the bottom margin back */
+    .section-heading.cap-title {
       grid-column: 1;         /* stays in col 1 */
-      margin-bottom: 8px;
-      font-size: 1.6rem;
+      margin-bottom: var(--space-1);
     }
-  
+
     .cap-list {
       grid-column: 1;         /* ✅ move pills under header */
       justify-content: flex-start;
@@ -84,6 +87,9 @@
     }
   }
   @media (max-width: 768px) {
+    .capabilities {
+      margin: var(--section-gap-mobile) 0;
+    }
     .cap-pill {
       padding: 8px 16px;
       border: 1px solid #333;

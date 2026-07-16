@@ -40,7 +40,7 @@ export default function LogoLoopIcons({
 
   return (
     <section className="logo-loop-section">
-    <h2 className="logo-loop-title">{title}</h2>
+    <h2 className="section-heading logo-loop-title">{title}</h2>
     <div className="logo-loop-mask">
       <div className="logo-loop-rail" style={vars}>
         <Row />

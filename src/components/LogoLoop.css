@@ -1,6 +1,5 @@
 /* Section/title (unchanged) */
-.logo-loop-section { margin: 125px 0; }
-.logo-loop-title { font-size: 1.8rem; font-weight: 400; margin-bottom: 16px; }
+.logo-loop-section { margin: var(--section-gap) 0; }
 
 /* Full-bleed mask (keep as you have) */
 .logo-loop-mask{
@@ -48,9 +47,11 @@
 }
 
 /* Mobile tweaks (you already pass speedMobile/sizeMobile/gapMobile via props) */
+@media (max-width: 992px){
+  .logo-loop-section{ margin: var(--section-gap-tablet) 0; }
+}
 @media (max-width: 768px){
-  .logo-loop-section{ margin: 56px 0; }
-  .logo-loop-title{ font-size: 1.4rem; }
+  .logo-loop-section{ margin: var(--section-gap-mobile) 0; }
 }
 
 /* If you had this earlier and animation was “stuck”, keep it off while testing */

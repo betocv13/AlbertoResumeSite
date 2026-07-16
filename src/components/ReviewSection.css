@@ -3,13 +3,7 @@
    =========================== */
 
 .reviews {
-    margin: 150px 0;
-}
-
-.reviews__title {
-    font-size: 2rem;
-    font-weight: 400;
-    color: #fff;
+    margin: var(--section-gap) 0;
 }
 
 /* Carousel shell */
@@ -197,13 +191,14 @@
    =========================== */
 
 @media (max-width: 992px) {
-    .reviews__inner {
-        padding: 0 1rem;
+    /* This single breakpoint covers tablet down through phone widths,
+       so it takes the mobile spacing value directly (no narrower tier below it). */
+    .reviews {
+        margin: var(--section-gap-mobile) 0;
     }
 
-    .reviews__title {
-        font-size: 1.6rem;
-        margin-bottom: 1.5rem;
+    .reviews__inner {
+        padding: 0 1rem;
     }
 
     .reviews__track {
