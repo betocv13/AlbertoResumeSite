@@ -215,6 +215,11 @@
         gap: 1rem;
         padding-left: 24px;
         padding-right: 0;
+        /* See the identical fix/comment in ProjectScroller.css: without
+           this, scroll-snap-align:start on the cards makes scrollLeft:0
+           an invalid snap position, so browsers auto-scroll past the
+           left padding on initial layout. */
+        scroll-padding-left: 24px;
     }
 
     /* Single-card view on mobile */

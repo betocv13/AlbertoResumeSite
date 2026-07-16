@@ -240,6 +240,15 @@
       gap: 20px;
       padding-left: 24px;
       padding-right: 0;
+      /* padding-left alone isn't enough: with scroll-snap-align:start on
+         the cards, scrollLeft:0 isn't a valid snap position (no card's
+         edge lines up with the raw scrollport edge there), so browsers
+         auto-scroll to scrollLeft:24 on initial layout -- exactly
+         cancelling the visual inset padding-left was meant to create.
+         scroll-padding-left tells the snap machinery where the "start"
+         line actually is, independent of the box-model padding, so
+         scrollLeft:0 becomes valid again. */
+      scroll-padding-left: 24px;
     }
     .scroller > *{
       flex-basis: 85%;                    /* nice big cards on phones */

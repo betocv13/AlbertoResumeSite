@@ -30,6 +30,17 @@ function ReviewSection() {
         fetchReviews();
     }, []);
 
+    // Force the real start position once the real cards are in the DOM.
+    // Same fix as ProjectsScroller.jsx: scroll-snap-align:start combined
+    // with the track's own padding-left can make some browsers auto-scroll
+    // past that padding on initial layout (landing on scrollLeft equal to
+    // the padding instead of 0), which cancels out the left inset the
+    // padding exists to create.
+    useEffect(() => {
+        if (!reviews.length || !trackRef.current) return;
+        trackRef.current.scrollLeft = 0;
+    }, [reviews]);
+
     useEffect(() => {
         const calculateMaxIndex = () => {
             if (!trackRef.current || reviews.length === 0) return;

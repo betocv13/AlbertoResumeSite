@@ -77,6 +77,15 @@ export default function ProjectsScroller() {
     const scroller = scrollerRef.current;
     if (!scroller) return;
 
+    // Some browsers resolve the first card's `scroll-snap-align: start`
+    // against the container's own padding-left by auto-scrolling past it
+    // on initial layout -- landing on scrollLeft === paddingLeft instead of
+    // 0, which visually cancels out the left inset padding-left exists to
+    // create (the first card ends up flush against the true edge instead
+    // of aligned with the rest of the page). Assert the real start
+    // position once the actual cards are in the DOM.
+    scroller.scrollLeft = 0;
+
     const handleScroll = () => {
       const { scrollLeft, scrollWidth, clientWidth } = scroller;
       setIsAtStart(scrollLeft <= 5);
