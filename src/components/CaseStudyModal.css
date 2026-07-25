@@ -427,6 +427,27 @@
   }
 }
 
+/* Comparison (before/after) -- reuses .case-study-images-row for the
+   half-layout grid (mobile 1-column collapse comes for free from that
+   class), .case-study-image-half for the image treatment, .case-study-pill
+   for the label (this codebase's nav .pill was removed when the nav was
+   rebuilt as a hamburger menu -- .case-study-pill, already used for the
+   SERVICES list in this same modal, is the closest live equivalent), and
+   .case-study-highlight-desc for the caption text. Only the panel's own
+   vertical stack is new. */
+.case-study-comparison-panel {
+  display: flex;
+  flex-direction: column;
+  gap: 12px; /* matches .case-study-highlight-card's internal stack gap */
+}
+
+.case-study-comparison-panel .case-study-pill {
+  /* Flex columns stretch children full-width by default -- opt the pill
+     back out so it stays sized to its own text instead of spanning the
+     column like the image below it. */
+  align-self: flex-start;
+}
+
 /* Image grid layout */
 .case-study-images-grid {
   display: grid;

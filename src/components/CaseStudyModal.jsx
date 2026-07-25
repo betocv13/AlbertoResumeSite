@@ -243,6 +243,30 @@ export default function CaseStudyModal({ project, onClose }) {
       return <CaseStudyStats key={idx} items={section.items || []} />;
     }
 
+    if (section.type === "comparison") {
+      const renderPanel = (data, key) => {
+        if (!data?.url) return null;
+        return (
+          <div key={key} className="case-study-comparison-panel">
+            {data.label && <span className="case-study-pill">{data.label}</span>}
+            <div className="case-study-image-half">
+              <img src={data.url} alt="" loading="lazy" />
+            </div>
+            {data.caption && <p className="case-study-highlight-desc">{data.caption}</p>}
+          </div>
+        );
+      };
+
+      return (
+        <div key={idx} className="case-study-section case-study-section-comparison">
+          <div className="case-study-images-row">
+            {renderPanel(section.before, "before")}
+            {renderPanel(section.after, "after")}
+          </div>
+        </div>
+      );
+    }
+
     if (section.type === "mixed") {
       const media = section.media || [];
       const layout = section.layout || "half";

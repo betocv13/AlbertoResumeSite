@@ -31,12 +31,13 @@ Folio) — not inferred from code alone.
 
 ## 2. Section types
 
-Six types exist: `text`, `image`, `video`, `mixed`, `highlights`, and
-`stats`. The renderer (`CaseStudyModal.jsx`, `renderSection()`) checks
-`section.type` against exactly these six strings. The first four are
-confirmed in real production data across all 9 case studies (see §4);
-`highlights` and `stats` are new and not yet used in any live case
-study — both are built and ready, waiting for content.
+Seven types exist: `text`, `image`, `video`, `mixed`, `highlights`,
+`stats`, and `comparison`. The renderer (`CaseStudyModal.jsx`,
+`renderSection()`) checks `section.type` against exactly these seven
+strings. The first four are confirmed in real production data across all
+9 case studies (see §4); `highlights`, `stats`, and `comparison` are new
+and not yet used in any live case study — all three are built and ready,
+waiting for content.
 
 ### `text`
 
@@ -238,12 +239,59 @@ the way the old (now-deleted) homepage Statistics section was.
 }
 ```
 
+### `comparison`
+
+A before/after pair — two images side by side, each with a small pill
+label above it ("First Iteration" / "Final Design", or "Before" /
+"After") and an optional caption underneath describing what changed. An
+intro headline above this (e.g. "Visual Language — ...") is a separate
+`text` section placed before it, same pattern as `highlights`: this type
+is only the two-image comparison itself.
+
+Images only — no video support in this type.
+
+No `layout` field — always two images side by side (one column on
+mobile).
+
+| Field | Type | Required? |
+|---|---|---|
+| `type` | `"comparison"` | required |
+| `before` | object | required |
+| `after` | object | required |
+| `before.url` / `after.url` | URL string | required — a panel with no `url` renders nothing at all for that side |
+| `before.label` / `after.label` | string | required in practice — this is the pill text; omit and no pill renders for that panel |
+| `before.caption` / `after.caption` | string | optional — omit to skip the caption for that panel |
+
+**Note on the pill styling:** this codebase's original `.pill` class (the
+homepage nav's pills) no longer exists — it was removed when the nav was
+rebuilt from 3 pill buttons into the hamburger menu. This type reuses
+`.case-study-pill` instead, the pill style already used for the
+`services` list in this same modal (small, bordered, uppercase-ish
+letter-spacing) — visually the closest live equivalent, not a new style.
+
+```json
+{
+  "type": "comparison",
+  "before": {
+    "url": "https://.../early-wireframe.png",
+    "label": "First Iteration",
+    "caption": "First dashboard concept with the existing design system for solo accounts."
+  },
+  "after": {
+    "url": "https://.../final-design.png",
+    "label": "Final Design",
+    "caption": "Iterated on visual styles to make it more welcoming — dark banner for trust, clearer onboarding."
+  }
+}
+```
+
 ## 3. What happens on a mistake
 
 **An unrecognized `type` value silently renders nothing.** The renderer's
 branch chain (`text` → `image` → `video` → `highlights` → `stats` →
-`mixed`) falls through to `return null` for anything else — no error in
-the console, no visual placeholder, nothing in the DOM at all. If a case
+`comparison` → `mixed`) falls through to `return null` for anything
+else — no error in the console, no visual placeholder, nothing in the
+DOM at all. If a case
 study looks like it's
 "missing" a section after you edit it in the Supabase dashboard, **the
 first thing to check is a typo'd or misspelled `type` string** — e.g.
