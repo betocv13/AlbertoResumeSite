@@ -31,9 +31,12 @@ Folio) — not inferred from code alone.
 
 ## 2. Section types
 
-Four types exist, and only these four appear anywhere in real data:
-`text`, `image`, `video`, `mixed`. The renderer (`CaseStudyModal.jsx`,
-`renderSection()`) checks `section.type` against exactly these four strings.
+Five types exist: `text`, `image`, `video`, `mixed`, and `highlights`. The
+renderer (`CaseStudyModal.jsx`, `renderSection()`) checks `section.type`
+against exactly these five strings. The first four are confirmed in real
+production data across all 9 case studies (see §4); `highlights` is new
+and not yet used in any live case study — it's built and ready, waiting
+for content.
 
 ### `text`
 
@@ -145,6 +148,49 @@ Each item in `media` is checked individually: `type: "video"` renders a
     { "url": "https://.../740shots_so.webp", "type": "image" }
   ],
   "layout": "half"
+}
+```
+
+### `highlights`
+
+A row of numbered cards — e.g. "01 Design", "02 Leadership", "03 XFN
+Work" — each a short title plus a 1-2 sentence description. This is
+**intentionally separate from `overview` and from the `text` type**: it
+does not replace either. `overview` is the paragraph field on the
+`projects` table itself, shown once at the top of every case study
+regardless of `sections` content. `text` sections handle a headline +
+longer paragraph anywhere in the flow. `highlights` is purely the
+numbered-card grid — if you want an intro headline sitting above the
+cards, add a separate `text` section immediately before the
+`highlights` section in the array; don't try to cram a headline into
+this type's fields.
+
+No `layout` field — always renders as a grid, sized to however many
+cards there are (see below).
+
+| Field | Type | Required? |
+|---|---|---|
+| `type` | `"highlights"` | required |
+| `items` | array of `{ number, title, description }` | required. 2–4 entries expected; not hard-capped, but the grid is designed around that range |
+| `items[].number` | string | optional per item, but expected in practice (e.g. `"01"`) — it's typed exactly as you want it displayed, not auto-generated from array position |
+| `items[].title` | string | optional per item — omit to skip the title |
+| `items[].description` | string | optional per item — omit to skip the description |
+
+Grid sizing: the column count equals the number of items, capped at 3 —
+2 items renders 2 even columns (not 2 columns + an empty third gap), 3
+renders 3, and 4 still renders 3 columns (wraps to a 3+1 layout, keeping
+the "3 across" look intact rather than squeezing to 4 columns). Collapses
+to 1 column on mobile at the same `768px` breakpoint as every other
+grid-based section type.
+
+```json
+{
+  "type": "highlights",
+  "items": [
+    { "number": "01", "title": "Design", "description": "Owned the design for..." },
+    { "number": "02", "title": "Leadership", "description": "Led a team through..." },
+    { "number": "03", "title": "XFN Work", "description": "Proactively generated ideas..." }
+  ]
 }
 ```
 

@@ -202,6 +202,38 @@ export default function CaseStudyModal({ project, onClose }) {
       );
     }
 
+    if (section.type === "highlights") {
+      const items = section.items || [];
+      // Fixed 3-across on desktop, but a 2-item case shouldn't leave an
+      // empty third grid cell -- size the grid to however many items
+      // there actually are, capped at 3 (the mobile breakpoint collapses
+      // this back to 1 column regardless).
+      const columns = Math.min(items.length, 3) || 1;
+
+      return (
+        <div key={idx} className="case-study-section case-study-section-highlights">
+          <div
+            className="case-study-highlights-grid"
+            style={{ "--highlights-columns": columns }}
+          >
+            {items.map((item, i) => (
+              <div key={i} className="case-study-highlight-card">
+                {item.number && (
+                  <span className="case-study-highlight-number">{item.number}</span>
+                )}
+                {item.title && (
+                  <h3 className="case-study-highlight-title">{item.title}</h3>
+                )}
+                {item.description && (
+                  <p className="case-study-highlight-desc">{item.description}</p>
+                )}
+              </div>
+            ))}
+          </div>
+        </div>
+      );
+    }
+
     if (section.type === "mixed") {
       const media = section.media || [];
       const layout = section.layout || "half";

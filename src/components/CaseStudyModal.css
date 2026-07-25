@@ -319,6 +319,49 @@
   max-width: 700px;
 }
 
+/* Highlights (numbered cards) */
+.case-study-highlights-grid {
+  display: grid;
+  grid-template-columns: repeat(var(--highlights-columns, 3), 1fr);
+  gap: clamp(16px, 3vw, 24px);
+}
+
+.case-study-highlight-card {
+  /* var(--panel)/#2a2a2a is the same background+border pairing
+     .contact-card uses elsewhere on the site -- reused here rather than
+     inventing a new "raised card" treatment. */
+  background: var(--panel);
+  border: 1px solid #2a2a2a;
+  border-radius: 12px; /* matches every other modal-internal container:
+                           .case-study-hero, .case-study-image-half, etc. */
+  padding: clamp(24px, 3vw, 32px); /* the 32px ceiling matches .contact-card's padding */
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.case-study-highlight-number {
+  font-size: 1.2rem;
+  font-weight: 400;
+  color: var(--muted); /* same role/color as .approach__number on the homepage */
+}
+
+.case-study-highlight-title {
+  font-size: 1.1rem;
+  font-weight: 600;
+  color: #fff;
+  margin: 0;
+}
+
+.case-study-highlight-desc {
+  font-size: 1rem;
+  line-height: 1.7;
+  /* Matches .case-study-overview p / .case-study-section-content --
+     this modal's established body-copy color. */
+  color: rgba(255, 255, 255, 0.75);
+  margin: 0;
+}
+
 /* Image grid layout */
 .case-study-images-grid {
   display: grid;
@@ -391,6 +434,10 @@
   }
 
   .case-study-images-row {
+    grid-template-columns: 1fr;
+  }
+
+  .case-study-highlights-grid {
     grid-template-columns: 1fr;
   }
 
