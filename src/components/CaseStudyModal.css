@@ -380,6 +380,53 @@
   margin: 0;
 }
 
+/* Stats (count-up numbers) */
+.case-study-stats {
+  display: flex;
+  /* space-between (not the deleted homepage StatsSection's
+     space-around) so the first number sits flush left, matching every
+     other section type's left alignment -- space-around would inset it,
+     which is exactly the inconsistency flagged against the old
+     StatsSection. */
+  justify-content: space-between;
+  gap: clamp(24px, 4vw, 48px);
+}
+
+.case-study-stat-item {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  text-align: left;
+  gap: 8px;
+}
+
+.case-study-stat-number {
+  /* Fluid instead of the old component's discrete breakpoint steps
+     (which weren't even monotonic -- 4rem/3rem/3.5rem across
+     desktop/tablet/mobile). Lands on the same 4rem ceiling. */
+  font-size: clamp(2.5rem, 6vw, 4rem);
+  font-weight: 400;
+  color: var(--accent); /* matches the old StatsSection exactly */
+  line-height: 1;
+}
+
+.case-study-stat-label {
+  font-size: 0.875rem; /* matches the old StatsSection exactly */
+  color: var(--muted);
+  /* No text-transform:capitalize here (the old component had it) --
+     labels in this schema are expected as full lowercase phrases like
+     "cups of coffee sold", and capitalizing every word would read
+     wrong for that length/casing. */
+}
+
+@media (max-width: 768px) {
+  .case-study-stats {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: clamp(24px, 4vw, 32px);
+  }
+}
+
 /* Image grid layout */
 .case-study-images-grid {
   display: grid;

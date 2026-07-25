@@ -31,12 +31,12 @@ Folio) — not inferred from code alone.
 
 ## 2. Section types
 
-Five types exist: `text`, `image`, `video`, `mixed`, and `highlights`. The
-renderer (`CaseStudyModal.jsx`, `renderSection()`) checks `section.type`
-against exactly these five strings. The first four are confirmed in real
-production data across all 9 case studies (see §4); `highlights` is new
-and not yet used in any live case study — it's built and ready, waiting
-for content.
+Six types exist: `text`, `image`, `video`, `mixed`, `highlights`, and
+`stats`. The renderer (`CaseStudyModal.jsx`, `renderSection()`) checks
+`section.type` against exactly these six strings. The first four are
+confirmed in real production data across all 9 case studies (see §4);
+`highlights` and `stats` are new and not yet used in any live case
+study — both are built and ready, waiting for content.
 
 ### `text`
 
@@ -194,12 +194,57 @@ grid-based section type.
 }
 ```
 
+### `stats`
+
+A row of big count-up numbers, each with a short label underneath — e.g.
+"5,000+ / cups of coffee sold". Ported from the homepage's old
+`StatsSection` (deleted, recoverable from git history at commit
+`e6a8b6c^`): same IntersectionObserver trigger (fires once, the first
+time the section scrolls into view — reopening/rescrolling to it doesn't
+replay it), same ease-out-cubic easing, same 2-second/60fps timing.
+
+No `layout` field.
+
+| Field | Type | Required? |
+|---|---|---|
+| `type` | `"stats"` | required |
+| `items` | array of `{ value, label }` | required. 2–4 entries expected |
+| `items[].value` | **string**, not a number | required for the count-up to mean anything. Typed exactly as it should display — `"5,000+"`, `"4x"`, `"300+"` are all valid as-is, no separate prefix/suffix fields needed |
+| `items[].label` | string | optional — short, a few words. Rendered exactly as typed (no automatic capitalization) |
+
+How the count-up handles the string `value`: it pulls out the first
+numeric substring (digits, an optional decimal point, optional
+thousands-commas) and animates that from 0 up to its real value, then
+re-attaches whatever text came before/after it on every frame — so
+`"5,000+"` animates as `"0+"` → `"2,341+"` → `"5,000+"`, preserving both
+the comma formatting and the `+`. If a `value` has no numeric substring
+at all (e.g. a plain word), it's rendered as-is with no animation —
+there's nothing to count up to.
+
+Unlike `highlights`, this type is left-aligned via `justify-content:
+space-between` rather than the old homepage component's
+`justify-content: space-around` — the first number sits flush left,
+matching every other section type's alignment, rather than being inset
+the way the old (now-deleted) homepage Statistics section was.
+
+```json
+{
+  "type": "stats",
+  "items": [
+    { "value": "5,000+", "label": "cups of coffee sold" },
+    { "value": "4x", "label": "increase in order conversion" },
+    { "value": "300+", "label": "weekly active users" }
+  ]
+}
+```
+
 ## 3. What happens on a mistake
 
 **An unrecognized `type` value silently renders nothing.** The renderer's
-branch chain (`text` → `image` → `video` → `mixed`) falls through to
-`return null` for anything else — no error in the console, no visual
-placeholder, nothing in the DOM at all. If a case study looks like it's
+branch chain (`text` → `image` → `video` → `highlights` → `stats` →
+`mixed`) falls through to `return null` for anything else — no error in
+the console, no visual placeholder, nothing in the DOM at all. If a case
+study looks like it's
 "missing" a section after you edit it in the Supabase dashboard, **the
 first thing to check is a typo'd or misspelled `type` string** — e.g.
 `"Text"`, `"Image"`, `" text"` (stray whitespace), or a leftover type from

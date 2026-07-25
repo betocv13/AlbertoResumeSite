@@ -1,4 +1,5 @@
 import { useEffect, useRef } from "react";
+import CaseStudyStats from "./CaseStudyStats";
 import "./CaseStudyModal.css";
 
 const FOCUSABLE_SELECTOR =
@@ -236,6 +237,10 @@ export default function CaseStudyModal({ project, onClose }) {
           </div>
         </div>
       );
+    }
+
+    if (section.type === "stats") {
+      return <CaseStudyStats key={idx} items={section.items || []} />;
     }
 
     if (section.type === "mixed") {
