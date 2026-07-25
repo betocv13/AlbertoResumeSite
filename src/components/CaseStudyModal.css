@@ -338,6 +338,24 @@
   display: flex;
   flex-direction: column;
   gap: 12px;
+  transition: background 0.2s ease, border-color 0.2s ease;
+}
+
+/* Desktop-only hover -- same background/border treatment as the
+   homepage's project .card:hover, reused rather than inventing a new
+   hover style. Skipped on touch/mobile widths where hover doesn't
+   apply the same way. */
+@media (min-width: 769px) {
+  .case-study-highlight-card:hover {
+    background: #2a2a2a;
+    border-color: #323232;
+  }
+}
+
+.case-study-highlight-heading {
+  display: flex;
+  align-items: baseline;
+  gap: 10px;
 }
 
 .case-study-highlight-number {

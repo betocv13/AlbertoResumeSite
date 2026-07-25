@@ -218,11 +218,15 @@ export default function CaseStudyModal({ project, onClose }) {
           >
             {items.map((item, i) => (
               <div key={i} className="case-study-highlight-card">
-                {item.number && (
-                  <span className="case-study-highlight-number">{item.number}</span>
-                )}
-                {item.title && (
-                  <h3 className="case-study-highlight-title">{item.title}</h3>
+                {(item.number || item.title) && (
+                  <div className="case-study-highlight-heading">
+                    {item.number && (
+                      <span className="case-study-highlight-number">{item.number}</span>
+                    )}
+                    {item.title && (
+                      <h3 className="case-study-highlight-title">{item.title}</h3>
+                    )}
+                  </div>
                 )}
                 {item.description && (
                   <p className="case-study-highlight-desc">{item.description}</p>
