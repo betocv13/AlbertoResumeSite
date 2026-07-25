@@ -241,12 +241,14 @@ the way the old (now-deleted) homepage Statistics section was.
 
 ### `comparison`
 
-A before/after pair — two images side by side, each with a small pill
-label above it ("First Iteration" / "Final Design", or "Before" /
-"After") and an optional caption underneath describing what changed. An
-intro headline above this (e.g. "Visual Language — ...") is a separate
-`text` section placed before it, same pattern as `highlights`: this type
-is only the two-image comparison itself.
+A before/after pair — two images side by side, each with a small solid
+white/black label badge sitting inline at the start of its caption line
+underneath the image (e.g. **Before** — The original menu relied on...).
+The badge and caption read as one unit at the bottom of each image, not
+a separate element floating above it. An intro headline above this
+(e.g. "Visual Language — ...") is a separate `text` section placed
+before it, same pattern as `highlights`: this type is only the
+two-image comparison itself.
 
 Images only — no video support in this type.
 
@@ -259,15 +261,16 @@ mobile).
 | `before` | object | required |
 | `after` | object | required |
 | `before.url` / `after.url` | URL string | required — a panel with no `url` renders nothing at all for that side |
-| `before.label` / `after.label` | string | required in practice — this is the pill text; omit and no pill renders for that panel |
-| `before.caption` / `after.caption` | string | optional — omit to skip the caption for that panel |
+| `before.label` / `after.label` | string | optional — this is the badge text (e.g. "Before"); omit and the caption renders with no badge in front of it |
+| `before.caption` / `after.caption` | string | optional — omit to skip the caption text (the badge, if present, still renders on its own) |
 
-**Note on the pill styling:** this codebase's original `.pill` class (the
-homepage nav's pills) no longer exists — it was removed when the nav was
-rebuilt from 3 pill buttons into the hamburger menu. This type reuses
-`.case-study-pill` instead, the pill style already used for the
-`services` list in this same modal (small, bordered, uppercase-ish
-letter-spacing) — visually the closest live equivalent, not a new style.
+**Note on the badge styling:** solid white background, black text,
+fully pill-shaped (`border-radius: 999px`) — not this codebase's
+outlined `.case-study-pill` (used for the `services` list), and not the
+original nav `.pill`, which no longer exists (removed when the nav was
+rebuilt into the hamburger menu). The white/black color pairing reuses
+`.case-study-avatar-name` (the team-member tooltip elsewhere in this
+same file), just pill-shaped instead of that tooltip's 6px rectangle.
 
 ```json
 {

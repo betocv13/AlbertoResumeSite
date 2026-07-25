@@ -248,11 +248,17 @@ export default function CaseStudyModal({ project, onClose }) {
         if (!data?.url) return null;
         return (
           <div key={key} className="case-study-comparison-panel">
-            {data.label && <span className="case-study-pill">{data.label}</span>}
             <div className="case-study-image-half">
               <img src={data.url} alt="" loading="lazy" />
             </div>
-            {data.caption && <p className="case-study-highlight-desc">{data.caption}</p>}
+            {(data.label || data.caption) && (
+              <p className="case-study-highlight-desc">
+                {data.label && (
+                  <span className="case-study-comparison-badge">{data.label}</span>
+                )}
+                {data.caption}
+              </p>
+            )}
           </div>
         );
       };

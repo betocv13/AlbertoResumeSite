@@ -429,23 +429,33 @@
 
 /* Comparison (before/after) -- reuses .case-study-images-row for the
    half-layout grid (mobile 1-column collapse comes for free from that
-   class), .case-study-image-half for the image treatment, .case-study-pill
-   for the label (this codebase's nav .pill was removed when the nav was
-   rebuilt as a hamburger menu -- .case-study-pill, already used for the
-   SERVICES list in this same modal, is the closest live equivalent), and
-   .case-study-highlight-desc for the caption text. Only the panel's own
-   vertical stack is new. */
+   class), .case-study-image-half for the image treatment, and
+   .case-study-highlight-desc for the caption paragraph. Only the panel's
+   own vertical stack and the inline badge are new. */
 .case-study-comparison-panel {
   display: flex;
   flex-direction: column;
   gap: 12px; /* matches .case-study-highlight-card's internal stack gap */
 }
 
-.case-study-comparison-panel .case-study-pill {
-  /* Flex columns stretch children full-width by default -- opt the pill
-     back out so it stays sized to its own text instead of spanning the
-     column like the image below it. */
-  align-self: flex-start;
+/* Inline label badge -- sits at the start of the caption line, not
+   floating above the image. Solid white/black instead of the outlined
+   .case-study-pill treatment, reusing the same white-bg/black-text
+   pairing .case-study-avatar-name (the team tooltip, above) already
+   uses in this file, just pill-shaped (999px) rather than that
+   tooltip's 6px rectangle -- 999px is this site's dominant badge/pill
+   radius (.hamburger-toggle, .cap-pill, and the original nav .pill all
+   used it) rather than .case-study-pill's own one-off 20px. */
+.case-study-comparison-badge {
+  display: inline-block;
+  background: #fff;
+  color: #000;
+  font-size: 0.7rem;
+  font-weight: 500;
+  padding: 2px 10px;
+  border-radius: 999px;
+  margin-right: 8px;
+  letter-spacing: 0.02em;
 }
 
 /* Image grid layout */
