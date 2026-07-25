@@ -1,4 +1,5 @@
 import { useCallback, useEffect, useRef, useState } from "react";
+import { useLocation, useNavigate } from "react-router-dom";
 import "./HamburgerNav.css";
 
 const SECTIONS = [
@@ -14,10 +15,17 @@ const SECTIONS = [
 
 export default function HamburgerNav() {
   const [open, setOpen] = useState(false);
-  const [active, setActive] = useState(SECTIONS[0].id);
+  const [scrollActive, setScrollActive] = useState(SECTIONS[0].id);
   const toggleRef = useRef(null);
   const menuRef = useRef(null);
   const firstLinkRef = useRef(null);
+  const location = useLocation();
+  const navigate = useNavigate();
+
+  const onWorkPage = location.pathname === "/work";
+  // "Work" is now a real page -- while on it there's nothing to
+  // scroll-track, so it's simply the active item outright.
+  const active = onWorkPage ? "work" : scrollActive;
 
   // Track the active section with a "scrollspy" threshold: the active
   // section is whichever one's top has most recently crossed a line near
@@ -37,6 +45,9 @@ export default function HamburgerNav() {
   // mutates so a late-arriving section is picked up immediately rather than
   // waiting for the next scroll/resize.
   useEffect(() => {
+    // Nothing to scroll-track on /work -- it's a static grid, not sections.
+    if (onWorkPage) return undefined;
+
     const getCurrentSections = () =>
       SECTIONS.map((s) => document.getElementById(s.id)).filter(Boolean);
 
@@ -74,7 +85,7 @@ export default function HamburgerNav() {
         }
       }
 
-      setActive((prev) => (bestId !== prev ? bestId : prev));
+      setScrollActive((prev) => (bestId !== prev ? bestId : prev));
     };
 
     onScroll();
@@ -89,7 +100,7 @@ export default function HamburgerNav() {
       window.removeEventListener("resize", onScroll);
       observer.disconnect();
     };
-  }, []);
+  }, [onWorkPage]);
 
   const close = useCallback(() => {
     setOpen(false);
@@ -123,10 +134,29 @@ export default function HamburgerNav() {
     return () => document.removeEventListener("mousedown", onPointerDown);
   }, [open, close]);
 
+  // "Work" is now a real page. Every other item is a homepage section --
+  // scroll to it directly if we're already there, otherwise navigate home
+  // with the id as a hash and let HomePage's own effect scroll to it once
+  // the target exists (most sections load async from Supabase).
+  const getHref = (id) => {
+    if (id === "work") return "/work";
+    return onWorkPage ? `/#${id}` : `#${id}`;
+  };
+
   const handleLinkClick = (e, id) => {
     e.preventDefault();
-    document.getElementById(id)?.scrollIntoView({ behavior: "smooth", block: "start" });
     close();
+
+    if (id === "work") {
+      navigate("/work");
+      return;
+    }
+
+    if (location.pathname === "/") {
+      document.getElementById(id)?.scrollIntoView({ behavior: "smooth", block: "start" });
+    } else {
+      navigate(`/#${id}`);
+    }
   };
 
   return (
@@ -158,7 +188,7 @@ export default function HamburgerNav() {
           {SECTIONS.map((s, i) => (
             <li key={s.id}>
               <a
-                href={`#${s.id}`}
+                href={getHref(s.id)}
                 ref={i === 0 ? firstLinkRef : undefined}
                 tabIndex={open ? 0 : -1}
                 className={`hamburger-link${active === s.id ? " is-active" : ""}`}

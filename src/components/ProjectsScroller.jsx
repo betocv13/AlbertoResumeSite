@@ -1,76 +1,28 @@
-import { useEffect, useState, useRef } from "react";
-import { supabase } from "../supabaseClient";
+import { useState, useEffect, useRef } from "react";
+import useProjects from "../hooks/useProjects";
+import { useCaseStudyModal } from "../hooks/useCaseStudyModal";
 import ProjectCard from "./ProjectCard";
 import CaseStudyModal from "./CaseStudyModal";
 import "./ProjectScroller.css";
 
-// Helper: Convert project title to URL-friendly slug
-function slugify(str) {
-  return str
-    .toLowerCase()
-    .trim()
-    .replace(/[^\w\s-]/g, "") // Remove special chars
-    .replace(/\s+/g, "-")     // Spaces to hyphens
-    .replace(/-+/g, "-");     // Collapse multiple hyphens
-}
+const HOMEPAGE_PROJECT_COUNT = 5;
+const INDEX_CARD = {
+  id: "__index__",
+  title: "index",
+  description: "view all projects",
+  image_url: "https://zyxtcejariappicwkusz.supabase.co/storage/v1/object/public/assets/projectsFolder.webp",
+};
 
 export default function ProjectsScroller() {
-  const [items, setItems] = useState([]);
-  const [loading, setLoading] = useState(true);
+  const { items, loading } = useProjects();
+  const { selectedProject, openCaseStudy, closeCaseStudy } = useCaseStudyModal(items);
   const [isAtStart, setIsAtStart] = useState(true);
   const [isAtEnd, setIsAtEnd] = useState(false);
-  const [selectedProject, setSelectedProject] = useState(null);
   const scrollerRef = useRef(null);
 
-  // Fetch projects from Supabase
-  useEffect(() => {
-    (async () => {
-      const { data, error } = await supabase
-        .from("projects")
-        .select("id, title, description, image_url, link_url, sort_order, is_active, is_case_study, team, services, project_date, overview, sections")
-        .eq("is_active", true)
-        .order("sort_order", { ascending: true });
-
-      if (error) {
-        console.error("Error fetching projects:", error);
-      } else {
-        setItems(data || []);
-      }
-      setLoading(false);
-    })();
-  }, []);
-
-  // Open project from URL hash on initial load
-  useEffect(() => {
-    if (!items.length) return;
-
-    const hash = window.location.hash.slice(1); // Remove '#'
-    if (hash) {
-      const project = items.find((p) => slugify(p.title) === hash);
-      if (project && project.is_case_study) {
-        setSelectedProject(project);
-      }
-    }
-  }, [items]);
-
-  // Listen for hash changes (browser back/forward)
-  useEffect(() => {
-    const handleHashChange = () => {
-      const hash = window.location.hash.slice(1);
-
-      if (!hash) {
-        setSelectedProject(null);
-      } else {
-        const project = items.find((p) => slugify(p.title) === hash);
-        if (project && project.is_case_study) {
-          setSelectedProject(project);
-        }
-      }
-    };
-
-    window.addEventListener("hashchange", handleHashChange);
-    return () => window.removeEventListener("hashchange", handleHashChange);
-  }, [items]);
+  // The homepage only teases the first few projects; the "index" tile
+  // always brings up the rear, linking through to the full /work page.
+  const displayItems = [...items.slice(0, HOMEPAGE_PROJECT_COUNT), INDEX_CARD];
 
   // Track scroll position
   useEffect(() => {
@@ -131,32 +83,31 @@ export default function ProjectsScroller() {
 
   if (!items.length) return null;
 
-  // Handle opening a case study (updates URL hash)
-  const openCaseStudy = (project) => {
-    window.location.hash = slugify(project.title);
-  };
-
-  // Handle closing case study (removes hash)
-  const closeCaseStudy = () => {
-    window.history.replaceState(null, "", window.location.pathname);
-    setSelectedProject(null);
-  };
-
   return (
     <section id="work" className="scroller-wrapper">
       <h2 className="sr-only">Work</h2>
       <div className="scroller" ref={scrollerRef} aria-label="Projects">
-        {items.map((p) => (
-          <ProjectCard
-            key={p.id}
-            title={p.title}
-            description={p.description}
-            imageUrl={p.image_url}
-            linkUrl={p.link_url}
-            isCaseStudy={p.is_case_study}
-            onCaseStudyClick={() => openCaseStudy(p)}
-          />
-        ))}
+        {displayItems.map((p) =>
+          p === INDEX_CARD ? (
+            <ProjectCard
+              key={p.id}
+              title={p.title}
+              description={p.description}
+              imageUrl={p.image_url}
+              to="/work"
+            />
+          ) : (
+            <ProjectCard
+              key={p.id}
+              title={p.title}
+              description={p.description}
+              imageUrl={p.image_url}
+              linkUrl={p.link_url}
+              isCaseStudy={p.is_case_study}
+              onCaseStudyClick={() => openCaseStudy(p)}
+            />
+          )
+        )}
       </div>
 
       {/* Fades - desktop only */}

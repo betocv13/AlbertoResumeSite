@@ -1,6 +1,7 @@
+import { Link } from "react-router-dom";
 import "./ProjectScroller.css";
 
-export default function ProjectCard({ title, description, imageUrl, linkUrl, isCaseStudy, onCaseStudyClick }) {
+export default function ProjectCard({ title, description, imageUrl, linkUrl, isCaseStudy, onCaseStudyClick, to }) {
   const content = (
     <div className="card">
       {imageUrl && (
@@ -10,8 +11,8 @@ export default function ProjectCard({ title, description, imageUrl, linkUrl, isC
         <div className="card-title">{title}</div>
         {description && <div className="card-desc">{description}</div>}
       </div>
-      {/* Show arrow for external links or expand icon for case studies */}
-      {(linkUrl || isCaseStudy) && (
+      {/* Show arrow for external/internal links or expand icon for case studies */}
+      {(linkUrl || isCaseStudy || to) && (
         <span className="card-arrow" aria-hidden="true">
           {isCaseStudy ? (
             <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
@@ -38,6 +39,15 @@ export default function ProjectCard({ title, description, imageUrl, linkUrl, isC
       >
         {content}
       </button>
+    );
+  }
+
+  // Internal route (e.g. the homepage's "index" tile -> /work)
+  if (to) {
+    return (
+      <Link to={to} className="card-link" aria-label={title}>
+        {content}
+      </Link>
     );
   }
 
