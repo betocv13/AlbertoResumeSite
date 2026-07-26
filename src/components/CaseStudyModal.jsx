@@ -105,20 +105,27 @@ export default function CaseStudyModal({ project, onClose }) {
 
     if (section.type === "image") {
       const images = section.images || [];
+      const captions = section.captions || [];
       const layout = section.layout || "full";
 
       return (
         <div key={idx} className={`case-study-section case-study-section-image layout-${layout}`}>
           {layout === "full" && images[0] && (
-            <div className="case-study-hero">
-              <img src={images[0]} alt="" loading="lazy" />
+            <div className="case-study-image-item">
+              <div className="case-study-hero">
+                <img src={images[0]} alt="" loading="lazy" />
+              </div>
+              {captions[0] && <p className="case-study-image-caption">{captions[0]}</p>}
             </div>
           )}
           {layout === "half" && (
             <div className="case-study-images-row">
               {images.slice(0, 2).map((img, i) => (
-                <div key={i} className="case-study-image-half">
-                  <img src={img} alt="" loading="lazy" />
+                <div key={i} className="case-study-image-item">
+                  <div className="case-study-image-half">
+                    <img src={img} alt="" loading="lazy" />
+                  </div>
+                  {captions[i] && <p className="case-study-image-caption">{captions[i]}</p>}
                 </div>
               ))}
             </div>
@@ -126,8 +133,11 @@ export default function CaseStudyModal({ project, onClose }) {
           {layout === "grid" && (
             <div className="case-study-images-grid">
               {images.map((img, i) => (
-                <div key={i} className="case-study-image-grid-item">
-                  <img src={img} alt="" loading="lazy" />
+                <div key={i} className="case-study-image-item">
+                  <div className="case-study-image-grid-item">
+                    <img src={img} alt="" loading="lazy" />
+                  </div>
+                  {captions[i] && <p className="case-study-image-caption">{captions[i]}</p>}
                 </div>
               ))}
             </div>

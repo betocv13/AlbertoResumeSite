@@ -246,6 +246,29 @@
   gap: clamp(16px, 3vw, 24px);
 }
 
+/* Wraps each image (in any layout) plus its optional caption -- lets a
+   caption sit under any single image without disturbing the row/grid's
+   own column sizing, since the grid/row now distributes space among
+   these wrappers instead of the raw image containers directly. */
+.case-study-image-item {
+  display: flex;
+  flex-direction: column;
+  gap: 12px; /* matches .case-study-comparison-panel's image+caption gap */
+}
+
+.case-study-image-caption {
+  /* Font-size matches the homepage's small/secondary text scale
+     (.reviews__role); color matches .case-study-label, this modal's
+     most-muted established tier -- deliberately not reusing
+     .case-study-label's letter-spacing/weight, which is tuned for
+     short all-caps tags ("TEAM", "DATE") and would look wrong applied
+     to a full caption sentence. */
+  font-size: 0.85rem;
+  line-height: 1.5;
+  color: rgba(255, 255, 255, 0.5);
+  margin: 0;
+}
+
 .case-study-hero {
   width: 100%;
   border-radius: 12px;

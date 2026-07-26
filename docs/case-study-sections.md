@@ -66,12 +66,26 @@ wide right column on desktop; stacks to 1 column on mobile).
 |---|---|---|
 | `type` | `"image"` | required |
 | `images` | array of URL strings | required (empty array renders nothing) |
+| `captions` | array of strings | optional. **Must be the same length and order as `images`** — `captions[i]` renders beneath `images[i]`. Omit the field entirely (or leave individual entries out) for images with no caption; a missing/short `captions` array just means those images render with no caption text, nothing breaks |
 | `layout` | `"full"` \| `"half"` \| `"grid"` | optional, defaults to `"full"` |
 
 Layout behavior:
-- `"full"` — first image only (`images[0]`), full-width
-- `"half"` — first **two** images (`images.slice(0, 2)`), side by side in a 2-column grid, `4:3` aspect ratio each. Extra images beyond 2 are silently ignored.
-- `"grid"` — **all** images, 3-column grid, square (`1:1`) aspect ratio each
+- `"full"` — first image only (`images[0]`), full-width. Caption (if `captions[0]` is set) renders beneath it.
+- `"half"` — first **two** images (`images.slice(0, 2)`), side by side in a 2-column grid, `4:3` aspect ratio each. Extra images beyond 2 are silently ignored (and so are their captions, if any). Each image's own caption renders beneath it individually.
+- `"grid"` — **all** images, 3-column grid, square (`1:1`) aspect ratio each. Each image's own caption renders beneath it individually.
+
+This is the recommended way to do a research/competitor-comparison
+section (several screenshots with a one-line label identifying each) —
+no separate section type needed for that: a `text` section for the
+narrative, followed by an `image` section at `layout: "grid"` with
+`captions` naming what each screenshot is.
+
+Caption text styling: `0.85rem`, `rgba(255,255,255,0.5)` — the font-size
+matches the homepage's small/secondary text scale (`.reviews__role`),
+and the color matches `.case-study-label` (this modal's most-muted
+established tier), but deliberately without `.case-study-label`'s
+letter-spacing/font-weight, which is tuned for short all-caps tags like
+"TEAM"/"DATE" and reads wrong applied to a full caption sentence.
 
 ```json
 {
@@ -86,6 +100,18 @@ Layout behavior:
   "type": "image",
   "images": ["https://.../shot-a.webp", "https://.../shot-b.webp"],
   "layout": "half"
+}
+```
+
+```json
+{
+  "type": "image",
+  "images": ["https://.../competitor-a.png", "https://.../competitor-b.png"],
+  "captions": [
+    "Local competitor — generic templated site, no custom branding",
+    "Dunkin' app — clean but not built for a small independent shop"
+  ],
+  "layout": "grid"
 }
 ```
 
